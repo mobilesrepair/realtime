@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser Antivirus Scanner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .file-card.infected {
+            border-color: #ef4444;
+            background-color: #fee2e2;
+        }
+        .file-card.clean {
+            border-color: #10b981;
+            background-color: #d1fae5;
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">Browser Antivirus Scanner</h1>
+            <p class="text-gray-600">Simulated file scanning and threat removal</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="flex flex-col md:flex-row gap-4 mb-6">
+                <input type="file" id="fileInput" class="hidden" multiple>
+                <button id="selectFilesBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition">
+                    Select Files to Scan
+                </button>
+                <button id="scanBtn" disabled class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition disabled:opacity-50">
+                    Scan Selected Files
+                </button>
+                <button id="deleteBtn" disabled class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition disabled:opacity-50">
+                    Delete Infected Files
+                </button>
+            </div>
+
+            <div class="mb-4">
+                <div class="flex justify-between mb-1">
+                    <span class="text-sm font-medium text-gray-700">Scan Progress</span>
+                    <span id="progressText" class="text-sm font-medium text-gray-700">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div id="progressBar" class="progress-bar bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div id="resultsSummary" class="hidden bg-gray-50 p-4 rounded-md mb-4">
+                <div class="flex justify-between">
+                    <div>
+                        <span class="font-semibold">Scan Results:</span>
+                        <span id="scannedCount" class="ml-2">0 files scanned</span>
+                    </div>
+                    <div>
+                        <span class="text-green-600 font-semibold"><span id="cleanCount">0</span> clean</span>
+                        <span class="mx-2">|</span>
+                        <span class="text-red-600 font-semibold"><span id="infectedCount">0</span> infected</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="fileList" class="grid gap-4">
+            <!-- Files will appear here -->
+            <div class="text-center text-gray-500 py-8">
+                <p>No files selected for scanning</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Known malware signatures (simulated)
+        const MALWARE_SIGNATURES = [
+            "d41d8cd98f00b204e9800998ecf8427e",  // Empty file (test signature)
+            "5d41402abc4b2a76b9719d911017c592",  // "hello" MD5
+            "098f6bcd4621d373cade4e832627b4f6"   // "test" MD5
+        ];
+
+        // File objects and scan results
+        let files = [];
+        let scanResults = [];
+
+        // DOM elements
+        const fileInput = document.getElementById('fileInput');
+        const selectFilesBtn = document.getElementById('selectFilesBtn');
+        const scanBtn = document.getElementById('scanBtn');
+        const deleteBtn = document.getElementById('deleteBtn');
+        const fileList = document.getElementById('fileList');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const resultsSummary = document.getElementById('resultsSummary');
+        const scannedCount = document.getElementById('scannedCount');
+        const cleanCount = document.getElementById('cleanCount');
+        const infectedCount = document.getElementById('infectedCount');
+
+        // Event listeners
+        selectFilesBtn.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', handleFileSelect);
+        scanBtn.addEventListener('click', startScan);
+        deleteBtn.addEventListener('click', deleteInfectedFiles);
+
+        // File selection handler
+        function handleFileSelect(event) {
+            files = Array.from(event.target.files);
+            scanResults = [];
+            
+            if (files.length > 0) {
+                scanBtn.disabled = false;
+                deleteBtn.disabled = true;
+                renderFileList();
+                resultsSummary.classList.add('hidden');
+            } else {
+                scanBtn.disabled = true;
+                deleteBtn.disabled = true;
+            }
+        }
+
+        // Render file list
+        function renderFileList() {
+            if (files.length === 0) {
+                fileList.innerHTML = '<div class="text-center text-gray-500 py-8"><p>No files selected for scanning</p></div>';
+                return;
+            }
+
+            fileList.innerHTML = '';
+            files.forEach((file, index) => {
+                const result = scanResults[index] || { status: 'pending' };
+                const card = document.createElement('div');
+                card.className = `file-card bg-white border rounded-lg p-4 flex justify-between items-center ${result.status}`;
+                
+                card.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="mr-4">
+                            ${result.status === 'infected' ? 
+                                '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>' : 
+                                result.status === 'clean' ? 
+                                '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>' :
+                                '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>'}
+                        </div>
+                        <div>
+                            <div class="font-medium">${file.name}</div>
+                            <div class="text-sm text-gray-500">${formatFileSize(file.size)}</div>
+                        </div>
+                    </div>
+                    <div class="text-sm ${result.status === 'infected' ? 'text-red-600 font-medium' : 'text-gray-500'}">
+                        ${result.status === 'infected' ? 'Infected' : 
+                         result.status === 'clean' ? 'Clean' : 'Pending scan'}
+                    </div>
+                `;
+                
+                fileList.appendChild(card);
+            });
+        }
+
+        // Start scanning files
+        function startScan() {
+            if (files.length === 0) return;
+            
+            scanBtn.disabled = true;
+            progressBar.style.width = '0%';
+            progressText.textContent = '0%';
+            resultsSummary.classList.add('hidden');
+            
+            let scanned = 0;
+            const totalFiles = files.length;
+            
+            files.forEach((file, index) => {
+                setTimeout(() => {
+                    scanFile(file).then(result => {
+                        scanResults[index] = result;
+                        scanned++;
+                        
+                        // Update progress
+                        const progress = Math.round((scanned / totalFiles) * 100);
+                        progressBar.style.width = `${progress}%`;
+                        progressText.textContent = `${progress}%`;
+                        
+                        // Update UI
+                        renderFileList();
+                        
+                        // When all files are scanned
+                        if (scanned === totalFiles) {
+                            scanComplete();
+                        }
+                    });
+                }, index * 300); // Stagger scans for visual effect
+            });
+        }
+
+        // Scan a single file (simulated)
+        function scanFile(file) {
+            return new Promise(resolve => {
+                // Simulate file reading and hashing
+                setTimeout(() => {
+                    // In a real app, you would calculate the MD5 hash of the file
+                    // For simulation, we'll use random matching
+                    const isInfected = Math.random() < 0.3; // 30% chance of being "infected"
+                    
+                    resolve({
+                        status: isInfected ? 'infected' : 'clean',
+                        file: file
+                    });
+                }, 500 + Math.random() * 1000); // Random delay to simulate scanning
+            });
+        }
+
+        // When scan is complete
+        function scanComplete() {
+            scanBtn.disabled = false;
+            
+            // Count results
+            const infectedFiles = scanResults.filter(r => r.status === 'infected').length;
+            const cleanFiles = scanResults.length - infectedFiles;
+            
+            // Update summary
+            scannedCount.textContent = `${scanResults.length} file${scanResults.length !== 1 ? 's' : ''} scanned`;
+            cleanCount.textContent = cleanFiles;
+            infectedCount.textContent = infectedFiles;
+            
+            // Show results
+            resultsSummary.classList.remove('hidden');
+            
+            // Enable delete button if there are infected files
+            deleteBtn.disabled = infectedFiles === 0;
+        }
+
+        // Delete infected files
+        function deleteInfectedFiles() {
+            if (!confirm('Are you sure you want to delete all infected files?')) return;
+            
+            // Filter out infected files
+            files = files.filter((file, index) => {
+                return scanResults[index] && scanResults[index].status !== 'infected';
+            });
+            
+            // Reset scan results
+            scanResults = [];
+            
+            // Update UI
+            renderFileList();
+            resultsSummary.classList.add('hidden');
+            deleteBtn.disabled = true;
+            
+            alert('Infected files have been deleted.');
+        }
+
+        // Helper function to format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+    </script>
+</body>
+</html>
