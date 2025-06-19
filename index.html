@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZuuCaster Ultimate Antivirus</title>
+    <title>ZuuCaster AI Antivirus</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -11,22 +11,20 @@
         .clean { background-color: #d1fae5; border-left: 4px solid #10b981; }
         .suspicious { background-color: #fef3c7; border-left: 4px solid #f59e0b; }
         .progress-bar { transition: width 0.3s ease; }
-        .glow { animation: glow 2s infinite alternate; }
-        @keyframes glow {
-            from { box-shadow: 0 0 5px #3b82f6; }
-            to { box-shadow: 0 0 20px #3b82f6; }
-        }
         .tab-active {
             border-bottom: 3px solid #3b82f6;
             color: #3b82f6;
             font-weight: 600;
         }
-        .dashboard-card {
-            transition: all 0.3s ease;
+        .glow {
+            animation: glow 2s infinite alternate;
         }
-        .dashboard-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        @keyframes glow {
+            from { box-shadow: 0 0 5px #3b82f6; }
+            to { box-shadow: 0 0 20px #3b82f6; }
+        }
+        .ai-protection-active {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
         }
     </style>
 </head>
@@ -39,25 +37,23 @@
                     <i class="fas fa-shield-alt text-white text-4xl"></i>
                 </div>
             </div>
-            <h1 class="text-4xl font-bold text-gray-800 mb-2">ZuuCaster Ultimate Antivirus</h1>
-            <p class="text-gray-600">Next-generation protection powered by AI</p>
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">ZuuCaster AI Antivirus</h1>
+            <p class="text-gray-600">Next-generation protection powered by artificial intelligence</p>
         </div>
 
         <!-- Tabs Navigation -->
         <div class="flex border-b border-gray-200 mb-8 overflow-x-auto">
             <button class="tab-btn px-4 py-2 mr-2 text-gray-600 hover:text-blue-600 whitespace-nowrap" data-tab="dashboard"><i class="fas fa-tachometer-alt mr-2"></i>Dashboard</button>
+            <button class="tab-btn px-4 py-2 mr-2 text-gray-600 hover:text-blue-600 whitespace-nowrap" data-tab="ai-protection"><i class="fas fa-brain mr-2"></i>AI Protection</button>
             <button class="tab-btn px-4 py-2 mr-2 text-gray-600 hover:text-blue-600 whitespace-nowrap" data-tab="quick-scan"><i class="fas fa-bolt mr-2"></i>Quick Scan</button>
-            <button class="tab-btn px-4 py-2 mr-2 text-gray-600 hover:text-blue-600 whitespace-nowrap" data-tab="full-scan"><i class="fas fa-search-plus mr-2"></i>Full Scan</button>
-            <button class="tab-btn px-4 py-2 mr-2 text-gray-600 hover:text-blue-600 whitespace-nowrap" data-tab="custom-scan"><i class="fas fa-cog mr-2"></i>Custom Scan</button>
-            <button class="tab-btn px-4 py-2 mr-2 text-gray-600 hover:text-blue-600 whitespace-nowrap" data-tab="threats"><i class="fas fa-history mr-2"></i>Threat History</button>
-            <button class="tab-btn px-4 py-2 text-gray-600 hover:text-blue-600 whitespace-nowrap" data-tab="settings"><i class="fas fa-sliders-h mr-2"></i>Settings</button>
+            <button class="tab-btn px-4 py-2 text-gray-600 hover:text-blue-600 whitespace-nowrap" data-tab="custom-scan"><i class="fas fa-cog mr-2"></i>Custom Scan</button>
         </div>
 
         <!-- Dashboard Tab -->
         <div id="dashboard" class="tab-content">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <!-- Protection Status -->
-                <div class="dashboard-card bg-white rounded-lg shadow-md p-6">
+                <div class="bg-white rounded-lg shadow-md p-6">
                     <div class="flex items-center mb-4">
                         <div class="bg-green-100 p-3 rounded-full mr-3">
                             <i class="fas fa-shield-alt text-green-600 text-xl"></i>
@@ -72,8 +68,24 @@
                     </div>
                 </div>
 
+                <!-- AI Protection Status -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-purple-100 p-3 rounded-full mr-3">
+                            <i class="fas fa-brain text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-medium">AI Protection</h3>
+                            <p class="text-sm text-gray-500">Advanced threat detection</p>
+                        </div>
+                    </div>
+                    <div class="bg-purple-50 p-3 rounded-lg">
+                        <p class="text-purple-800 font-medium"><i class="fas fa-bolt mr-2"></i>Active with 99.9% accuracy</p>
+                    </div>
+                </div>
+
                 <!-- Last Scan -->
-                <div class="dashboard-card bg-white rounded-lg shadow-md p-6">
+                <div class="bg-white rounded-lg shadow-md p-6">
                     <div class="flex items-center mb-4">
                         <div class="bg-blue-100 p-3 rounded-full mr-3">
                             <i class="fas fa-search text-blue-600 text-xl"></i>
@@ -87,47 +99,15 @@
                         <p class="text-blue-800"><i class="far fa-clock mr-2"></i><span id="lastScanTime">Never scanned</span></p>
                     </div>
                 </div>
-
-                <!-- Threats Blocked -->
-                <div class="dashboard-card bg-white rounded-lg shadow-md p-6">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-red-100 p-3 rounded-full mr-3">
-                            <i class="fas fa-virus text-red-600 text-xl"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-medium">Threats Blocked</h3>
-                            <p class="text-sm text-gray-500">Last 30 days</p>
-                        </div>
-                    </div>
-                    <div class="bg-red-50 p-3 rounded-lg">
-                        <p class="text-red-800 font-medium"><span id="threatsBlocked">0</span> threats detected</p>
-                    </div>
-                </div>
-
-                <!-- AI Protection -->
-                <div class="dashboard-card bg-white rounded-lg shadow-md p-6">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-purple-100 p-3 rounded-full mr-3">
-                            <i class="fas fa-brain text-purple-600 text-xl"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-medium">AI Protection</h3>
-                            <p class="text-sm text-gray-500">Advanced threat detection</p>
-                        </div>
-                    </div>
-                    <div class="bg-purple-50 p-3 rounded-lg">
-                        <p class="text-purple-800"><i class="fas fa-bolt mr-2"></i>Active with 99.9% accuracy</p>
-                    </div>
-                </div>
             </div>
 
             <!-- Quick Actions -->
             <div class="bg-white rounded-lg shadow-md p-6 mb-8">
                 <h2 class="text-xl font-semibold mb-4"><i class="fas fa-bolt text-yellow-500 mr-2"></i>Quick Actions</h2>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <button class="bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-3 rounded-md flex flex-col items-center">
-                        <i class="fas fa-search text-2xl mb-2"></i>
-                        <span>Quick Scan</span>
+                    <button class="ai-scan-btn bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-3 rounded-md flex flex-col items-center">
+                        <i class="fas fa-brain text-2xl mb-2"></i>
+                        <span>AI Scan</span>
                     </button>
                     <button class="bg-purple-100 hover:bg-purple-200 text-purple-800 px-4 py-3 rounded-md flex flex-col items-center">
                         <i class="fas fa-search-plus text-2xl mb-2"></i>
@@ -143,27 +123,105 @@
                     </button>
                 </div>
             </div>
+        </div>
 
-            <!-- Recent Threats -->
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-xl font-semibold mb-4"><i class="fas fa-history text-blue-500 mr-2"></i>Recent Threats</h2>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Threat Name</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="threatHistory" class="bg-white divide-y divide-gray-200">
-                            <tr>
-                                <td colspan="5" class="px-6 py-4 text-center text-gray-500">No recent threats detected</td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <!-- AI Protection Tab -->
+        <div id="ai-protection" class="tab-content hidden">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-6"><i class="fas fa-brain text-purple-500 mr-2"></i>AI Protection</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <!-- AI Protection Status -->
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-medium">AI Threat Detection</h3>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="aiProtectionToggle" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                            </label>
+                        </div>
+                        <p class="text-gray-600 mb-4">Advanced machine learning algorithms detect and block never-before-seen threats in real-time.</p>
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-purple-600 mr-2"></i>
+                                <span class="font-medium">Current Protection Level:</span>
+                                <span class="ml-2">Maximum</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- AI Learning -->
+                    <div class="bg-white border border-gray-200 rounded-lg p-6">
+                        <h3 class="font-medium mb-4">AI Learning Mode</h3>
+                        <p class="text-gray-600 mb-4">Improve detection by allowing the AI to learn from your system's behavior patterns.</p>
+                        
+                        <div class="space-y-3">
+                            <label class="flex items-center">
+                                <input type="radio" name="aiLearning" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300" checked>
+                                <span class="ml-2">Balanced (Recommended)</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="aiLearning" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300">
+                                <span class="ml-2">Aggressive (Higher detection, more false positives)</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="aiLearning" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300">
+                                <span class="ml-2">Conservative (Lower detection, fewer false positives)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI Scan History -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="font-medium mb-4"><i class="fas fa-history mr-2 text-blue-500"></i>AI Detection History</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Threat Type</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">AI Confidence</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">Just now</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">Behavior anomaly</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                            <div class="bg-yellow-500 h-2.5 rounded-full" style="width: 78%"></div>
+                                        </div>
+                                        <span class="text-xs">78%</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">Monitored</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">5 min ago</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">Potential ransomware</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                            <div class="bg-red-500 h-2.5 rounded-full" style="width: 92%"></div>
+                                        </div>
+                                        <span class="text-xs">92%</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">Blocked</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">Today, 10:15 AM</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">Suspicious memory activity</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                            <div class="bg-orange-500 h-2.5 rounded-full" style="width: 85%"></div>
+                                        </div>
+                                        <span class="text-xs">85%</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">Quarantined</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -171,107 +229,40 @@
         <!-- Quick Scan Tab -->
         <div id="quick-scan" class="tab-content hidden">
             <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4"><i class="fas fa-bolt text-yellow-500 mr-2"></i>Quick Scan</h2>
+                <p class="text-gray-600 mb-6">Rapidly scan critical system areas for malware and other threats.</p>
+                
                 <div class="flex flex-col md:flex-row gap-4 mb-6">
-                    <button id="quickScanBtn" class="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-3 rounded-md flex items-center justify-center">
-                        <i class="fas fa-bolt mr-2"></i> Run Quick Scan
+                    <button id="startQuickScan" class="flex-1 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white px-4 py-3 rounded-md flex items-center justify-center">
+                        <i class="fas fa-bolt mr-2"></i> Start Quick Scan
+                    </button>
+                    <button id="aiQuickScan" class="flex-1 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-4 py-3 rounded-md flex items-center justify-center">
+                        <i class="fas fa-brain mr-2"></i> AI Enhanced Scan
                     </button>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-blue-50 p-4 rounded-lg">
-                        <h3 class="font-medium text-blue-800 mb-2"><i class="fas fa-info-circle mr-2"></i>About Quick Scan</h3>
-                        <p class="text-blue-700 mb-4">Quickly scans common locations where malware is typically found. This scan is fast but less thorough than a full system scan.</p>
-                        <ul class="text-blue-700 space-y-2">
-                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Scans memory processes</li>
-                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Checks startup programs</li>
-                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Examines system registry</li>
-                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Analyzes browser extensions</li>
-                        </ul>
-                    </div>
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <h3 class="font-medium text-gray-800 mb-2"><i class="fas fa-chart-line mr-2"></i>Scan Statistics</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-sm font-medium">Estimated Time</span>
-                                    <span class="text-sm font-medium">1-2 minutes</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 30%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-sm font-medium">System Impact</span>
-                                    <span class="text-sm font-medium">Low</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-green-500 h-2 rounded-full" style="width: 20%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-sm font-medium">Detection Rate</span>
-                                    <span class="text-sm font-medium">85%</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 85%"></div>
-                                </div>
-                            </div>
+                
+                <div class="hidden" id="quickScanProgress">
+                    <div class="mb-4">
+                        <div class="flex justify-between mb-1">
+                            <span class="font-medium">Scan Progress</span>
+                            <span id="quickScanPercent">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="quickScanBar" class="progress-bar bg-yellow-500 h-2.5 rounded-full" style="width: 0%"></div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Full Scan Tab -->
-        <div id="full-scan" class="tab-content hidden">
-            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-                <div class="flex flex-col md:flex-row gap-4 mb-6">
-                    <button id="fullScanBtn" class="flex-1 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-4 py-3 rounded-md flex items-center justify-center">
-                        <i class="fas fa-search-plus mr-2"></i> Run Full System Scan
-                    </button>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-purple-50 p-4 rounded-lg">
-                        <h3 class="font-medium text-purple-800 mb-2"><i class="fas fa-info-circle mr-2"></i>About Full Scan</h3>
-                        <p class="text-purple-700 mb-4">Completely scans your entire system for malware. This scan is more thorough but takes longer to complete.</p>
-                        <ul class="text-purple-700 space-y-2">
-                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Deep scan of all files</li>
-                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Heuristic analysis</li>
-                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Cloud-assisted detection</li>
-                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>AI-powered threat analysis</li>
-                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Rootkit detection</li>
-                        </ul>
-                    </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
-                        <h3 class="font-medium text-gray-800 mb-2"><i class="fas fa-chart-line mr-2"></i>Scan Statistics</h3>
-                        <div class="space-y-4">
+                        <p class="text-gray-700" id="quickScanStatus">Initializing scan...</p>
+                    </div>
+                </div>
+                
+                <div class="hidden" id="quickScanResults">
+                    <div class="bg-green-50 p-4 rounded-lg border border-green-200 mt-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 text-2xl mr-3"></i>
                             <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-sm font-medium">Estimated Time</span>
-                                    <span class="text-sm font-medium">30-60 minutes</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-purple-600 h-2 rounded-full" style="width: 70%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-sm font-medium">System Impact</span>
-                                    <span class="text-sm font-medium">Medium</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 50%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-sm font-medium">Detection Rate</span>
-                                    <span class="text-sm font-medium">99.9%</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-green-500 h-2 rounded-full" style="width: 99%"></div>
-                                </div>
+                                <h3 class="font-medium">Scan Complete</h3>
+                                <p class="text-sm text-green-700" id="quickScanResultText">No threats detected in critical areas</p>
                             </div>
                         </div>
                     </div>
@@ -282,323 +273,83 @@
         <!-- Custom Scan Tab -->
         <div id="custom-scan" class="tab-content hidden">
             <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-                <div class="flex flex-col md:flex-row gap-4 mb-6">
+                <h2 class="text-xl font-semibold mb-4"><i class="fas fa-cog text-blue-500 mr-2"></i>Custom Scan</h2>
+                
+                <div class="mb-6">
                     <input type="file" id="customFileInput" class="hidden" multiple webkitdirectory directory>
-                    <button id="selectCustomFilesBtn" class="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-3 rounded-md flex items-center justify-center">
+                    <button id="selectCustomFilesBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md mr-3">
                         <i class="fas fa-folder-open mr-2"></i> Select Files/Folders
                     </button>
-                    <button id="customScanBtn" disabled class="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-3 rounded-md flex items-center justify-center">
-                        <i class="fas fa-search mr-2"></i> Start Custom Scan
-                    </button>
-                    <button id="cloudScanBtn" class="flex-1 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-4 py-3 rounded-md flex items-center justify-center">
-                        <i class="fas fa-cloud mr-2"></i> Cloud Scan
-                    </button>
+                    <span id="selectedFilesCount">No files selected</span>
                 </div>
-
-                <!-- Scan Options -->
-                <div class="mb-6 p-4 bg-gray-50 rounded-lg">
-                    <h3 class="font-medium mb-3"><i class="fas fa-sliders-h mr-2 text-gray-600"></i>Scan Options</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Scan Options</label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <label class="flex items-center">
                             <input type="checkbox" id="deepScan" class="rounded text-blue-600 mr-2" checked>
-                            Deep Scan (Heuristic Analysis)
+                            Deep Scan
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" id="heuristicScan" class="rounded text-blue-600 mr-2" checked>
+                            Heuristic Analysis
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" id="aiScan" class="rounded text-blue-600 mr-2" checked>
+                            AI-Powered Detection
                         </label>
                         <label class="flex items-center">
                             <input type="checkbox" id="scanArchives" class="rounded text-blue-600 mr-2">
                             Scan Inside Archives
                         </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" id="scanMemory" class="rounded text-blue-600 mr-2">
-                            Scan Memory Processes
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" id="scanRegistry" class="rounded text-blue-600 mr-2">
-                            Scan Registry Entries
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" id="scanStartup" class="rounded text-blue-600 mr-2">
-                            Scan Startup Programs
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" id="scanNetwork" class="rounded text-blue-600 mr-2">
-                            Scan Network Connections
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" id="scanRootkit" class="rounded text-blue-600 mr-2">
-                            Rootkit Detection
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" id="useAI" class="rounded text-blue-600 mr-2" checked>
-                            AI-Powered Analysis
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Progress Section -->
-                <div class="mb-6">
-                    <div class="flex justify-between mb-2">
-                        <span class="font-medium">Scan Progress</span>
-                        <span id="progressText" class="font-medium">0%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
-                        <div id="progressBar" class="progress-bar bg-gradient-to-r from-blue-500 to-blue-600 h-3 rounded-full" style="width: 0%"></div>
-                    </div>
-                    <div class="flex justify-between text-sm text-gray-600">
-                        <span id="scannedCount">0 files scanned</span>
-                        <span id="threatsCount">0 threats found</span>
-                        <span id="scanSpeed">Speed: 0 files/sec</span>
-                    </div>
-                </div>
-
-                <!-- Scan Details -->
-                <div id="scanDetails" class="hidden">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-medium"><i class="fas fa-list-ul mr-2 text-gray-600"></i>Scan Details</h3>
-                        <div class="flex space-x-2">
-                            <button id="exportReportBtn" class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-sm">
-                                <i class="fas fa-file-export mr-1"></i> Export Report
-                            </button>
-                            <button id="showChartBtn" class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-sm">
-                                <i class="fas fa-chart-pie mr-1"></i> Show Chart
-                            </button>
-                            <button id="saveScanBtn" class="bg-blue-100 hover:bg-blue-200 text-blue-800 px-3 py-1 rounded text-sm">
-                                <i class="fas fa-save mr-1"></i> Save Scan
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div id="fileList" class="space-y-2 max-h-96 overflow-y-auto pr-2">
-                        <div class="text-center text-gray-500 py-8">
-                            <i class="fas fa-folder-open text-4xl mb-2"></i>
-                            <p>No files selected for scanning</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Threats History Tab -->
-        <div id="threats" class="tab-content hidden">
-            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-xl font-semibold"><i class="fas fa-history text-blue-500 mr-2"></i>Threat History</h2>
-                    <div class="flex space-x-2">
-                        <button id="refreshThreatsBtn" class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-sm">
-                            <i class="fas fa-sync-alt mr-1"></i> Refresh
-                        </button>
-                        <button id="clearThreatsBtn" class="bg-red-100 hover:bg-red-200 text-red-800 px-3 py-1 rounded text-sm">
-                            <i class="fas fa-trash-alt mr-1"></i> Clear History
-                        </button>
                     </div>
                 </div>
                 
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Threat Name</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
-                            </tr>
-                        </thead>
-                        <tbody id="threatHistoryTable" class="bg-white divide-y divide-gray-200">
-                            <tr>
-                                <td colspan="6" class="px-6 py-4 text-center text-gray-500">No threat history available</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div class="mt-4 flex justify-between items-center">
-                    <div class="text-sm text-gray-500">Showing <span id="threatsShowing">0</span> of <span id="totalThreats">0</span> threats</div>
-                    <div class="flex space-x-2">
-                        <button id="prevThreatsBtn" class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-sm" disabled>
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button id="nextThreatsBtn" class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-sm" disabled>
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Settings Tab -->
-        <div id="settings" class="tab-content hidden">
-            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-                <h2 class="text-xl font-semibold mb-6"><i class="fas fa-cog mr-2 text-gray-600"></i>Settings</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Protection Settings -->
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <h3 class="font-medium mb-4"><i class="fas fa-shield-alt mr-2 text-blue-500"></i>Protection Settings</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Real-time Protection</label>
-                                    <p class="text-xs text-gray-500">Monitor system activity for threats</p>
-                                </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="realtimeToggle" class="sr-only peer" checked>
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Firewall</label>
-                                    <p class="text-xs text-gray-500">Block unauthorized network access</p>
-                                </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="firewallToggle" class="sr-only peer" checked>
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Behavior Monitoring</label>
-                                    <p class="text-xs text-gray-500">Detect suspicious activities</p>
-                                </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="behaviorToggle" class="sr-only peer" checked>
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Update Settings -->
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <h3 class="font-medium mb-4"><i class="fas fa-cloud-download-alt mr-2 text-blue-500"></i>Update Settings</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Automatic Updates</label>
-                                    <p class="text-xs text-gray-500">Keep virus definitions current</p>
-                                </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="autoUpdateToggle" class="sr-only peer" checked>
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                                </label>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Update Frequency</label>
-                                <select id="updateFrequency" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                    <option>Daily</option>
-                                    <option selected>Every 12 hours</option>
-                                    <option>Every 6 hours</option>
-                                    <option>Every hour</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Update Server</label>
-                                <select id="updateServer" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                    <option selected>Automatic (Fastest)</option>
-                                    <option>North America</option>
-                                    <option>Europe</option>
-                                    <option>Asia</option>
-                                    <option>Australia</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Scan Settings -->
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <h3 class="font-medium mb-4"><i class="fas fa-search mr-2 text-blue-500"></i>Scan Settings</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Scan Priority</label>
-                                <select id="scanPriority" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                    <option>Low (Minimal system impact)</option>
-                                    <option selected>Normal (Balanced)</option>
-                                    <option>High (Maximum performance)</option>
-                                </select>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Scan Archives</label>
-                                    <p class="text-xs text-gray-500">Scan inside ZIP, RAR files</p>
-                                </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="scanArchivesSetting" class="sr-only peer">
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Heuristic Analysis</label>
-                                    <p class="text-xs text-gray-500">Detect unknown threats</p>
-                                </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="heuristicSetting" class="sr-only peer" checked>
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                                </label>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">AI-Powered Detection</label>
-                                    <p class="text-xs text-gray-500">Advanced threat analysis</p>
-                                </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="aiDetectionSetting" class="sr-only peer" checked>
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Quarantine Settings -->
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <h3 class="font-medium mb-4"><i class="fas fa-box-open mr-2 text-blue-500"></i>Quarantine Settings</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Max Quarantine Size</label>
-                                <select id="quarantineSize" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                    <option>100 MB</option>
-                                    <option>500 MB</option>
-                                    <option selected>1 GB</option>
-                                    <option>5 GB</option>
-                                    <option>No Limit</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Auto-delete After</label>
-                                <select id="quarantineAge" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                    <option>7 days</option>
-                                    <option selected>30 days</option>
-                                    <option>60 days</option>
-                                    <option>Never</option>
-                                </select>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Auto-quarantine</label>
-                                    <p class="text-xs text-gray-500">Automatically quarantine threats</p>
-                                </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="autoQuarantineSetting" class="sr-only peer" checked>
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Save Button -->
-                <div class="mt-6">
-                    <button id="saveSettingsBtn" class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-3 rounded-md">
-                        <i class="fas fa-save mr-2"></i> Save All Settings
+                <div class="flex flex-col md:flex-row gap-4 mb-6">
+                    <button id="startCustomScan" class="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-3 rounded-md flex items-center justify-center" disabled>
+                        <i class="fas fa-search mr-2"></i> Start Custom Scan
                     </button>
+                    <button id="startAICustomScan" class="flex-1 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-4 py-3 rounded-md flex items-center justify-center" disabled>
+                        <i class="fas fa-brain mr-2"></i> Deep AI Analysis
+                    </button>
+                </div>
+                
+                <div class="hidden" id="customScanProgress">
+                    <div class="mb-4">
+                        <div class="flex justify-between mb-1">
+                            <span class="font-medium">Scan Progress</span>
+                            <span id="customScanPercent">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="customScanBar" class="progress-bar bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <p class="text-gray-700" id="customScanStatus">Preparing to scan...</p>
+                        <p class="text-sm text-gray-500 mt-1" id="scanningFile"></p>
+                        <div class="mt-3 hidden" id="aiAnalysisStatus">
+                            <div class="flex items-center">
+                                <i class="fas fa-brain text-purple-500 mr-2"></i>
+                                <span class="text-sm font-medium text-purple-700">AI analyzing potential threats...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hidden" id="customScanResults">
+                    <div class="bg-white border border-gray-200 rounded-lg p-4 mt-4">
+                        <h3 class="font-medium mb-2">Scan Results</h3>
+                        <div class="space-y-2" id="scanResultsList">
+                            <!-- Results will appear here -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Notification System -->
         <div id="notification" class="fixed bottom-4 right-4 hidden">
-            <div class="bg-blue-600 text-white px-4 py-2 rounded-md shadow-lg flex items-center">
+            <div class="bg-blue-600 text-white px-4 py-2 rounded-md shadow-lg flex items-center max-w-xs">
                 <i class="fas fa-info-circle mr-2"></i>
                 <span id="notificationText">Notification message</span>
             </div>
@@ -606,78 +357,345 @@
     </div>
 
     <script>
-        // File objects and scan results
-        let files = [];
-        let scanResults = [];
-        let threatsInQuarantine = 0;
-        let threatHistory = [];
-        let currentThreatPage = 1;
-        const threatsPerPage = 10;
-
-        // DOM elements
-        const tabBtns = document.querySelectorAll('.tab-btn');
+        // Tab functionality
+        const tabButtons = document.querySelectorAll('.tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');
-        const customFileInput = document.getElementById('customFileInput');
-        const selectCustomFilesBtn = document.getElementById('selectCustomFilesBtn');
-        const customScanBtn = document.getElementById('customScanBtn');
-        const cloudScanBtn = document.getElementById('cloudScanBtn');
-        const quickScanBtn = document.getElementById('quickScanBtn');
-        const fullScanBtn = document.getElementById('fullScanBtn');
-        const fileList = document.getElementById('fileList');
-        const progressBar = document.getElementById('progressBar');
-        const progressText = document.getElementById('progressText');
-        const scannedCount = document.getElementById('scannedCount');
-        const threatsCount = document.getElementById('threatsCount');
-        const scanSpeed = document.getElementById('scanSpeed');
-        const scanDetails = document.getElementById('scanDetails');
-        const exportReportBtn = document.getElementById('exportReportBtn');
-        const showChartBtn = document.getElementById('showChartBtn');
-        const saveScanBtn = document.getElementById('saveScanBtn');
-        const refreshThreatsBtn = document.getElementById('refreshThreatsBtn');
-        const clearThreatsBtn = document.getElementById('clearThreatsBtn');
-        const threatHistoryTable = document.getElementById('threatHistoryTable');
-        const prevThreatsBtn = document.getElementById('prevThreatsBtn');
-        const nextThreatsBtn = document.getElementById('nextThreatsBtn');
-        const threatsShowing = document.getElementById('threatsShowing');
-        const totalThreats = document.getElementById('totalThreats');
-        const lastScanTime = document.getElementById('lastScanTime');
-        const threatsBlocked = document.getElementById('threatsBlocked');
-        const saveSettingsBtn = document.getElementById('saveSettingsBtn');
-        const notification = document.getElementById('notification');
-        const notificationText = document.getElementById('notificationText');
-
-        // Sample threat data
-        const sampleThreats = [
-            { name: "Trojan.GenericKDZ", type: "Trojan", date: "2023-05-15 14:30", location: "C:\\Windows\\System32\\drivers", action: "Quarantined", details: "Heuristic detection" },
-            { name: "Exploit.CVE-2023-1234", type: "Exploit", date: "2023-05-14 09:15", location: "C:\\Program Files\\Java", action: "Blocked", details: "Known vulnerability" },
-            { name: "PUP.Optional.BundleInstaller", type: "PUP", date: "2023-05-12 18:45", location: "Downloads\\installer.exe", action: "Removed", details: "Bundled software" },
-            { name: "Ransomware.Cryptolocker", type: "Ransomware", date: "2023-05-10 11:20", location: "Documents\\invoice.pdf.exe", action: "Blocked", details: "Behavior detection" },
-            { name: "Adware.Elex", type: "Adware", date: "2023-05-08 16:10", location: "AppData\\Local\\Temp", action: "Quarantined", details: "Adware pattern" }
-        ];
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set first tab as active
-            tabBtns[0].classList.add('tab-active');
-            tabContents[0].classList.remove('hidden');
-            
-            // Load sample threat history
-            threatHistory = [...sampleThreats];
-            updateThreatHistory();
-            
-            // Update dashboard stats
-            updateDashboard();
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('tab-active'));
+                tabContents.forEach(content => content.classList.add('hidden'));
+                
+                // Add active class to clicked button and show corresponding content
+                button.classList.add('tab-active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.remove('hidden');
+            });
         });
 
-        // Tab switching
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tabId = btn.getAttribute('data-tab');
+        // Initialize first tab as active
+        document.querySelector('.tab-btn').click();
+
+        // AI Protection Toggle
+        const aiProtectionToggle = document.getElementById('aiProtectionToggle');
+        aiProtectionToggle.addEventListener('change', function() {
+            if(this.checked) {
+                showNotification('AI Protection enabled');
+            } else {
+                showNotification('Warning: AI Protection disabled');
+            }
+        });
+
+        // Quick Scan functionality
+        const startQuickScan = document.getElementById('startQuickScan');
+        const aiQuickScan = document.getElementById('aiQuickScan');
+        const quickScanProgress = document.getElementById('quickScanProgress');
+        const quickScanResults = document.getElementById('quickScanResults');
+        const quickScanStatus = document.getElementById('quickScanStatus');
+        
+        startQuickScan.addEventListener('click', () => {
+            quickScanProgress.classList.remove('hidden');
+            quickScanResults.classList.add('hidden');
+            
+            // Simulate scan progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 2;
+                document.getElementById('quickScanPercent').textContent = `${progress}%`;
+                document.getElementById('quickScanBar').style.width = `${progress}%`;
                 
-                // Update active tab
-                tabBtns.forEach(b => b.classList.remove('tab-active'));
-                btn.classList.add('tab-active');
+                // Update status messages
+                if(progress < 30) {
+                    quickScanStatus.textContent = "Scanning memory processes...";
+                } else if(progress < 60) {
+                    quickScanStatus.textContent = "Checking system files...";
+                } else if(progress < 90) {
+                    quickScanStatus.textContent = "Analyzing registry entries...";
+                } else {
+                    quickScanStatus.textContent = "Finalizing scan results...";
+                }
                 
-                // Show corresponding content
-                tabContents.forEach(content => content.classList.add('hidden'));
-                document.getElementById(tabId).class
+                if(progress >= 100) {
+                    clearInterval(interval);
+                    quickScanResults.classList.remove('hidden');
+                    document.getElementById('quickScanResultText').textContent = "No threats detected in critical areas";
+                    showNotification('Quick scan completed successfully');
+                    document.getElementById('lastScanTime').textContent = new Date().toLocaleString();
+                }
+            }, 100);
+        });
+
+        // AI Enhanced Quick Scan
+        aiQuickScan.addEventListener('click', () => {
+            quickScanProgress.classList.remove('hidden');
+            quickScanResults.classList.add('hidden');
+            
+            // Simulate AI scan progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 1.5; // Slightly slower for AI analysis
+                document.getElementById('quickScanPercent').textContent = `${Math.min(progress, 100)}%`;
+                document.getElementById('quickScanBar').style.width = `${Math.min(progress, 100)}%`;
+                document.getElementById('quickScanBar').classList.add('bg-gradient-to-r', 'from-purple-500', 'to-purple-600');
+                
+                // Update status messages with AI-specific text
+                if(progress < 20) {
+                    quickScanStatus.textContent = "Initializing AI models...";
+                } else if(progress < 40) {
+                    quickScanStatus.textContent = "Analyzing behavior patterns...";
+                } else if(progress < 60) {
+                    quickScanStatus.textContent = "Checking for anomalies...";
+                } else if(progress < 80) {
+                    quickScanStatus.textContent = "Cross-referencing threat database...";
+                } else if(progress < 100) {
+                    quickScanStatus.textContent = "Finalizing AI analysis...";
+                }
+                
+                if(progress >= 100) {
+                    clearInterval(interval);
+                    quickScanResults.classList.remove('hidden');
+                    document.getElementById('quickScanResultText').textContent = "AI analysis complete. No advanced threats detected.";
+                    showNotification('AI Enhanced scan completed');
+                    document.getElementById('lastScanTime').textContent = new Date().toLocaleString();
+                }
+            }, 100);
+        });
+
+        // Custom Scan functionality
+        const customFileInput = document.getElementById('customFileInput');
+        const selectCustomFilesBtn = document.getElementById('selectCustomFilesBtn');
+        const startCustomScan = document.getElementById('startCustomScan');
+        const startAICustomScan = document.getElementById('startAICustomScan');
+        const selectedFilesCount = document.getElementById('selectedFilesCount');
+        const customScanProgress = document.getElementById('customScanProgress');
+        const customScanResults = document.getElementById('customScanResults');
+        
+        selectCustomFilesBtn.addEventListener('click', () => {
+            customFileInput.click();
+        });
+        
+        customFileInput.addEventListener('change', () => {
+            if(customFileInput.files.length > 0) {
+                selectedFilesCount.textContent = `${customFileInput.files.length} file(s) selected`;
+                startCustomScan.disabled = false;
+                startAICustomScan.disabled = false;
+            } else {
+                selectedFilesCount.textContent = 'No files selected';
+                startCustomScan.disabled = true;
+                startAICustomScan.disabled = true;
+            }
+        });
+        
+        startCustomScan.addEventListener('click', () => {
+            const files = customFileInput.files;
+            if(files.length === 0) return;
+            
+            customScanProgress.classList.remove('hidden');
+            customScanResults.classList.add('hidden');
+            
+            let progress = 0;
+            let currentFile = 0;
+            const totalFiles = files.length;
+            const useAI = document.getElementById('aiScan').checked;
+            
+            const interval = setInterval(() => {
+                if(currentFile < totalFiles) {
+                    document.getElementById('scanningFile').textContent = 
+                        `Scanning: ${files[currentFile].name}`;
+                    currentFile++;
+                }
+                
+                progress += 100 / totalFiles;
+                const displayProgress = Math.min(progress, 100);
+                document.getElementById('customScanPercent').textContent = 
+                    `${Math.round(displayProgress)}%`;
+                document.getElementById('customScanBar').style.width = 
+                    `${displayProgress}%`;
+                
+                // Randomly show AI analysis status if enabled
+                if(useAI && Math.random() > 0.7) {
+                    document.getElementById('aiAnalysisStatus').classList.remove('hidden');
+                    setTimeout(() => {
+                        document.getElementById('aiAnalysisStatus').classList.add('hidden');
+                    }, 2000);
+                }
+                
+                if(progress >= 100) {
+                    clearInterval(interval);
+                    showScanResults();
+                }
+            }, 300);
+            
+            function showScanResults() {
+                customScanResults.classList.remove('hidden');
+                const resultsList = document.getElementById('scanResultsList');
+                resultsList.innerHTML = '';
+                
+                // Add sample results
+                const results = [
+                    { file: 'document.pdf', status: 'clean', aiConfidence: null },
+                    { file: 'setup.exe', status: 'suspicious', aiConfidence: 78 },
+                    { file: 'image.jpg', status: 'clean', aiConfidence: null },
+                    { file: 'script.js', status: 'infected', aiConfidence: 92 }
+                ];
+                
+                results.forEach(result => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'flex items-center justify-between p-2 border-b border-gray-100';
+                    
+                    let statusColor, statusIcon, statusText;
+                    if(result.status === 'clean') {
+                        statusColor = 'text-green-500';
+                        statusIcon = 'fa-check-circle';
+                        statusText = 'Clean';
+                    } else if(result.status === 'suspicious') {
+                        statusColor = 'text-yellow-500';
+                        statusIcon = 'fa-exclamation-triangle';
+                        statusText = 'Suspicious';
+                    } else {
+                        statusColor = 'text-red-500';
+                        statusIcon = 'fa-times-circle';
+                        statusText = 'Infected';
+                    }
+                    
+                    resultItem.innerHTML = `
+                        <div class="flex-1 truncate">${result.file}</div>
+                        <div class="flex items-center ${statusColor}">
+                            <i class="fas ${statusIcon} mr-1"></i>
+                            <span>${statusText}</span>
+                            ${result.aiConfidence ? `
+                                <div class="ml-3 text-xs bg-gray-100 px-2 py-1 rounded">
+                                    AI Confidence: ${result.aiConfidence}%
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                    resultsList.appendChild(resultItem);
+                });
+                
+                showNotification('Custom scan completed');
+                document.getElementById('lastScanTime').textContent = new Date().toLocaleString();
+            }
+        });
+
+        // AI Custom Scan
+        startAICustomScan.addEventListener('click', () => {
+            const files = customFileInput.files;
+            if(files.length === 0) return;
+            
+            customScanProgress.classList.remove('hidden');
+            customScanResults.classList.add('hidden');
+            
+            let progress = 0;
+            let currentFile = 0;
+            const totalFiles = files.length;
+            
+            // Show AI analysis status immediately for AI scan
+            document.getElementById('aiAnalysisStatus').classList.remove('hidden');
+            document.getElementById('customScanBar').classList.add('bg-gradient-to-r', 'from-purple-500', 'to-purple-600');
+            
+            const interval = setInterval(() => {
+                if(currentFile < totalFiles) {
+                    document.getElementById('scanningFile').textContent = 
+                        `Analyzing: ${files[currentFile].name}`;
+                    currentFile++;
+                }
+                
+                progress += 80 / totalFiles; // Slower progress for deeper analysis
+                const displayProgress = Math.min(progress, 100);
+                document.getElementById('customScanPercent').textContent = 
+                    `${Math.round(displayProgress)}%`;
+                document.getElementById('customScanBar').style.width = 
+                    `${displayProgress}%`;
+                
+                // Update status with AI-specific messages
+                if(progress < 30) {
+                    document.getElementById('customScanStatus').textContent = "Initializing neural networks...";
+                } else if(progress < 60) {
+                    document.getElementById('customScanStatus').textContent = "Analyzing file behavior patterns...";
+                } else if(progress < 90) {
+                    document.getElementById('customScanStatus').textContent = "Cross-referencing with threat intelligence...";
+                } else {
+                    document.getElementById('customScanStatus').textContent = "Finalizing deep learning analysis...";
+                }
+                
+                if(progress >= 100) {
+                    clearInterval(interval);
+                    showAIResults();
+                }
+            }, 500);
+            
+            function showAIResults() {
+                customScanResults.classList.remove('hidden');
+                const resultsList = document.getElementById('scanResultsList');
+                resultsList.innerHTML = '';
+                
+                // Add sample AI results
+                const results = [
+                    { file: 'document.pdf', status: 'clean', aiConfidence: 99 },
+                    { file: 'setup.exe', status: 'suspicious', aiConfidence: 85, aiNote: 'Potential packed executable' },
+                    { file: 'image.jpg', status: 'clean', aiConfidence: 98 },
+                    { file: 'script.js', status: 'infected', aiConfidence: 97, aiNote: 'Obfuscated malicious code detected' },
+                    { file: 'archive.zip', status: 'suspicious', aiConfidence: 76, aiNote: 'Contains files with high entropy' }
+                ];
+                
+                results.forEach(result => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'flex flex-col p-3 border-b border-gray-100';
+                    
+                    let statusColor, statusIcon, statusText;
+                    if(result.status === 'clean') {
+                        statusColor = 'text-green-500';
+                        statusIcon = 'fa-check-circle';
+                        statusText = 'Clean';
+                    } else if(result.status === 'suspicious') {
+                        statusColor = 'text-yellow-500';
+                        statusIcon = 'fa-exclamation-triangle';
+                        statusText = 'Suspicious';
+                    } else {
+                        statusColor = 'text-red-500';
+                        statusIcon = 'fa-times-circle';
+                        statusText = 'Infected';
+                    }
+                    
+                    resultItem.innerHTML = `
+                        <div class="flex items-center justify-between">
+                            <div class="font-medium truncate">${result.file}</div>
+                            <div class="flex items-center ${statusColor} ml-2">
+                                <i class="fas ${statusIcon} mr-1"></i>
+                                <span>${statusText}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center mt-1">
+                            <div class="text-xs bg-gray-100 px-2 py-1 rounded mr-2">
+                                AI Confidence: ${result.aiConfidence}%
+                            </div>
+                            ${result.aiNote ? `
+                                <div class="text-xs text-gray-600 truncate">
+                                    <i class="fas fa-info-circle mr-1"></i>${result.aiNote}
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                    resultsList.appendChild(resultItem);
+                });
+                
+                showNotification('Deep AI analysis completed');
+                document.getElementById('lastScanTime').textContent = new Date().toLocaleString();
+            }
+        });
+
+        // Notification system
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notificationText.textContent = message;
+            notification.classList.remove('hidden');
+            
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
