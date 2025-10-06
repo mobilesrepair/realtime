@@ -3,572 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hacker Terminal - Secure Access</title>
+    <title>Hacker Vault - Access Denied</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        
         body {
             margin: 0;
-            padding: 20px;
-            background-color: black;
+            padding: 0;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
             color: #00ff00;
-            font-family: 'Courier New', monospace;
-            overflow-x: hidden;
+            font-family: 'Orbitron', monospace;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+        
         .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .terminal-header {
-            border-bottom: 1px solid #00ff00;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .header-dots {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 5px;
-        }
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-        .dot.red { background-color: #ff4444; }
-        .dot.yellow { background-color: #ffbb44; }
-        .dot.green { background-color: #44ff44; }
-        .terminal {
-            background-color: rgba(0, 0, 0, 0.8);
-            border: 1px solid #00ff00;
-            padding: 20px;
-            height: 400px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-            text-shadow: 0 0 5px #00ff00;
-        }
-        .message {
-            margin-bottom: 5px;
-            white-space: pre-wrap;
-        }
-        .error { color: #ff4444; }
-        .success { color: #44ff44; }
-        .input-line {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .prompt {
-            color: #00ff00;
-        }
-        input[type="password"] {
-            flex: 1;
-            background: black;
-            color: #00ff00;
-            border: 1px solid #00ff00;
-            padding: 10px;
-            font-family: 'Courier New', monospace;
-        }
-        input[type="password"]:focus {
-            outline: none;
-            box-shadow: 0 0 5px #00ff00;
-        }
-        button {
-            background: #00aa00;
-            color: white;
-            border: 1px solid #00ff00;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-family: 'Courier New', monospace;
-        }
-        button:hover {
-            background: #00ff00;
-            color: black;
-        }
-        button:disabled {
-            background: #004400;
-            cursor: not-allowed;
-        }
-        .content-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            padding: 10px;
-            background: rgba(0, 255, 0, 0.1);
-            border: 1px solid #00ff00;
-            border-radius: 5px;
-        }
-        .content-text {
-            font-weight: bold;
-            user-select: none; /* Prevent easy selection */
-        }
-        .security-warning {
             text-align: center;
-            color: #00aa00;
-            font-size: 14px;
-            margin-top: 20px;
+            max-width: 600px;
+            padding: 20px;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #00ff00;
             animation: pulse 2s infinite;
         }
+        
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            0% { box-shadow: 0 0 20px #00ff00; }
+            50% { box-shadow: 0 0 40px #00ff00; }
+            100% { box-shadow: 0 0 20px #00ff00; }
         }
-        /* Anti-screenshot CSS */
-        @media print {
-            body * { display: none !important; }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ff00;
+            letter-spacing: 3px;
         }
-        .obfuscated {
-            font-family: 'Courier New', monospace;
+        
+        input[type="password"] {
+            background: #000;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 15px;
+            font-size: 1.2em;
+            font-family: 'Orbitron', monospace;
+            width: 300px;
+            margin: 10px;
+            border-radius: 5px;
+            text-align: center;
         }
-        /* Prevent text selection */
-        .protected {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+        
+        input[type="password"]::placeholder {
+            color: #00ff00;
+            opacity: 0.7;
         }
+        
+        button {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-family: 'Orbitron', monospace;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #00cc00;
+            box-shadow: 0 0 10px #00ff00;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .vault-content {
+            margin-top: 30px;
+            text-align: left;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 20px;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .vault-content h2 {
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        
+        .section {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px dashed #00ff00;
+            border-radius: 5px;
+        }
+        
+        .section h3 {
+            color: #00ff00;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .content-item {
+            background: rgba(0, 0, 0, 0.5);
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 4px solid #00ff00;
+            font-size: 1.1em;
+            word-break: break-all;
+            cursor: pointer;
+            transition: background 0.3s;
+            user-select: text; /* Allow text selection for copy-paste */
+        }
+        
+        .content-item:hover {
+            background: rgba(0, 255, 0, 0.2);
+        }
+        
+        .content-item:active {
+            background: rgba(0, 255, 0, 0.3);
+        }
+        
+        /* Matrix-style background animation */
+        .matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            z-index: -1;
+            font-size: 20px;
+            animation: matrix 10s linear infinite;
+        }
+        
+        @keyframes matrix {
+            0% { transform: translateY(100vh); }
+            100% { transform: translateY(-100vh); }
+        }
+        
+        /* Note: Screenshot prevention is not fully possible in web browsers, but we've made content selectable for copy-paste only. */
     </style>
 </head>
 <body>
+    <div class="matrix" id="matrix"></div>
+    
     <div class="container">
-        <div class="terminal-header">
-            <div class="header-dots">
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
+        <h1>ACCESS TERMINAL</h1>
+        <p style="font-size: 1.1em; margin-bottom: 20px;">Enter Secret Code to Unlock Vault</p>
+        
+        <input type="password" id="secretCode" placeholder="ZUUCASTER" maxlength="9">
+        <br>
+        <button onclick="checkCode()">DECRYPT</button>
+        
+        <div id="vault" class="vault-content hidden">
+            <h2>UNLOCKED CONTENT</h2>
+            
+            <div class="section">
+                <h3>1. unlocktool</h3>
+                <div class="content-item" onclick="copyToClipboard(this)">mobilehospitalbd</div>
+                <div class="content-item" onclick="copyToClipboard(this)">Anwar.1982</div>
             </div>
-            <div>Secure Terminal v2.4.1</div>
-        </div>
-        
-        <div id="terminal" class="terminal">
-            <!-- Messages will be added here dynamically -->
-        </div>
-        
-        <div id="inputSection" class="input-line">
-            <span class="prompt">root@secure-terminal:~$</span>
-            <input type="password" id="codeInput" placeholder="Enter access code..." autofocus>
-            <button onclick="submitCode()">EXECUTE</button>
-        </div>
-        
-        <div id="cursor" class="prompt">_ Waiting for input...</div>
-        
-        <div class="security-warning">
-            ▲ SECURITY PROTOCOL ACTIVE ▲<br>
-            Screen capture detection enabled
+            
+            <div class="section">
+                <h3>2. axmt</h3>
+                <div class="content-item" onclick="copyToClipboard(this)">sharwankumarverma@gmail.com</div>
+                <div class="content-item" onclick="copyToClipboard(this)">Sharwan44</div>
+            </div>
+            
+            <p style="font-size: 0.9em; color: #00cc00; margin-top: 20px;">Click any item to copy. Screenshots disabled in secure mode (browser limitations apply).</p>
         </div>
     </div>
 
     <script>
-        const terminal = document.getElementById('terminal');
-        const codeInput = document.getElementById('codeInput');
-        const inputSection = document.getElementById('inputSection');
-        const cursor = document.getElementById('cursor');
-        const SECRET_CODE = 'ZUUCASTER';
-        const PROTECTED_CONTENT = [
-            'unlocktool',
-            'mobilehospitalbd',
-            'password:Anwar.1982'
-        ];
+        const secretCode = "ZUUCASTER";
+        const vault = document.getElementById("vault");
+        const input = document.getElementById("secretCode");
         
-        let messages = [];
-        let authenticated = false;
-        let isCopying = false;
-        
-        // Add message to terminal
-        function addMessage(text, className = '') {
-            const div = document.createElement('div');
-            div.className = `message ${className}`;
-            div.textContent = text;
-            terminal.appendChild(div);
-            terminal.scrollTop = terminal.scrollHeight;
-        }
-        
-        // Initial boot messages
-        addMessage('System booting...');
-        setTimeout(() => addMessage('Security protocols initialized'), 800);
-        setTimeout(() => addMessage('Enter access code:'), 1500);
-        
-        // Anti-screenshot protections
-        document.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-            addMessage('SECURITY: Context menu disabled', 'error');
-        });
-        
-        document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey && e.key === 'p') || e.key === 'PrintScreen' || (e.ctrlKey && e.key === 's')) {
-                e.preventDefault();
-                addMessage('SECURITY: Capture attempt blocked', 'error');
+        // Generate simple matrix rain effect
+        function createMatrix() {
+            const matrix = document.getElementById("matrix");
+            const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+            for (let i = 0; i < 100; i++) {
+                const span = document.createElement("span");
+                span.textContent = chars[Math.floor(Math.random() * chars.length)];
+                span.style.position = "absolute";
+                span.style.left = Math.random() * 100 + "%";
+                span.style.animationDelay = Math.random() * 10 + "s";
+                matrix.appendChild(span);
             }
-        });
-        
-        // Obfuscate text visually (randomly replace chars with blocks)
-        function getObfuscatedText(text) {
-            return text.split('').map(char => Math.random() > 0.3 ? char : '█').join('');
         }
+        createMatrix();
         
-        // Submit code
-        function submitCode() {
-            const input = codeInput.value.toUpperCase().trim();
-            if (input === SECRET_CODE) {
-                authenticated = true;
-                addMessage('ACCESS GRANTED', 'success');
-                addMessage('Decrypting secure content...');
-                setTimeout(() => {
-                    addMessage('Content ready for copy operation');
-                    showProtectedContent();
-                }, 1000);
-                inputSection.style.display = 'none';
-                cursor.style.display = 'none';
-                codeInput.value = '';
+        function checkCode() {
+            if (input.value === secretCode) {
+                vault.classList.remove("hidden");
+                input.disabled = true;
+                document.querySelector("button").textContent = "SECURED";
+                document.querySelector("button").style.background = "#00cc00";
             } else {
-                addMessage('ACCESS DENIED - Invalid code', 'error');
-                addMessage('System will lock down in 3...');
-                setTimeout(() => addMessage('2...'), 1000);
-                setTimeout(() => addMessage('1...'), 2000);
-                setTimeout(() => {
-                    codeInput.value = '';
-                    addMessage('Enter access code:');
-                }, 3000);
+                alert("ACCESS DENIED. Wrong code.");
+                input.value = "";
+                input.focus();
             }
         }
         
-        // Show protected content
-        function showProtectedContent() {
-            const contentDiv = document.createElement('div');
-            contentDiv.innerHTML = '<div class="message success">SECURE CONTENT:</div>';
-            PROTECTED_CONTENT.forEach((item, index) => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'content-item protected';
-                itemDiv.innerHTML = `
-                    <span class="content-text obfuscated">${getObfuscatedText(item)}</span>
-                    <button onclick="copyToClipboard('${item.replace(/'/g, "\\'")}', this)" ${isCopying ? 'disabled' : ''}>
-                        ${isCopying ? 'COPIED' : 'COPY'}
-                    </button>
-                `;
-                contentDiv.appendChild(itemDiv);
-            });
-            terminal.appendChild(contentDiv);
-        }
-        
-        // Copy to clipboard
-        function copyToClipboard(text, button) {
-            if (isCopying) return;
-            navigator.clipboard.writeText(text).then(() => {
-                isCopying = true;
-                button.textContent = 'COPIED';
-                button.disabled = true;
-                button.style.background = '#004400';
-                addMessage(`Copied: ${text}`, 'success');
-                setTimeout(() => {
-                    isCopying = false;
-                    button.textContent = 'COPY';
-                    button.disabled = false;
-                    button.style.background = '#00aa00';
-                }, 2000);
-            }).catch(() => {
-                addMessage('Copy failed. Manually select and copy.', 'error');
-            });
-        }
-        
-        // Enter key submission
-        codeInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') submitCode();
+        // Allow Enter key to submit
+        input.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                checkCode();
+            }
         });
         
-        // Cursor blink animation
-        setInterval(() => {
-            if (!authenticated && inputSection.style.display !== 'none') {
-                cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
-            }
-        }, 500);
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hacker Terminal - Secure Access</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 20px;
-            background-color: black;
-            color: #00ff00;
-            font-family: 'Courier New', monospace;
-            overflow-x: hidden;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .terminal-header {
-            border-bottom: 1px solid #00ff00;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .header-dots {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 5px;
-        }
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-        .dot.red { background-color: #ff4444; }
-        .dot.yellow { background-color: #ffbb44; }
-        .dot.green { background-color: #44ff44; }
-        .terminal {
-            background-color: rgba(0, 0, 0, 0.8);
-            border: 1px solid #00ff00;
-            padding: 20px;
-            height: 400px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-            text-shadow: 0 0 5px #00ff00;
-        }
-        .message {
-            margin-bottom: 5px;
-            white-space: pre-wrap;
-        }
-        .error { color: #ff4444; }
-        .success { color: #44ff44; }
-        .input-line {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .prompt {
-            color: #00ff00;
-        }
-        input[type="password"] {
-            flex: 1;
-            background: black;
-            color: #00ff00;
-            border: 1px solid #00ff00;
-            padding: 10px;
-            font-family: 'Courier New', monospace;
-        }
-        input[type="password"]:focus {
-            outline: none;
-            box-shadow: 0 0 5px #00ff00;
-        }
-        button {
-            background: #00aa00;
-            color: white;
-            border: 1px solid #00ff00;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-family: 'Courier New', monospace;
-        }
-        button:hover {
-            background: #00ff00;
-            color: black;
-        }
-        button:disabled {
-            background: #004400;
-            cursor: not-allowed;
-        }
-        .content-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            padding: 10px;
-            background: rgba(0, 255, 0, 0.1);
-            border: 1px solid #00ff00;
-            border-radius: 5px;
-        }
-        .content-text {
-            font-weight: bold;
-            user-select: none; /* Prevent easy selection */
-        }
-        .security-warning {
-            text-align: center;
-            color: #00aa00;
-            font-size: 14px;
-            margin-top: 20px;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        /* Anti-screenshot CSS */
-        @media print {
-            body * { display: none !important; }
-        }
-        .obfuscated {
-            font-family: 'Courier New', monospace;
-        }
-        /* Prevent text selection */
-        .protected {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="terminal-header">
-            <div class="header-dots">
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
-            </div>
-            <div>Secure Terminal v2.4.1</div>
-        </div>
-        
-        <div id="terminal" class="terminal">
-            <!-- Messages will be added here dynamically -->
-        </div>
-        
-        <div id="inputSection" class="input-line">
-            <span class="prompt">root@secure-terminal:~$</span>
-            <input type="password" id="codeInput" placeholder="Enter access code..." autofocus>
-            <button onclick="submitCode()">EXECUTE</button>
-        </div>
-        
-        <div id="cursor" class="prompt">_ Waiting for input...</div>
-        
-        <div class="security-warning">
-            ▲ SECURITY PROTOCOL ACTIVE ▲<br>
-            Screen capture detection enabled
-        </div>
-    </div>
-
-    <script>
-        const terminal = document.getElementById('terminal');
-        const codeInput = document.getElementById('codeInput');
-        const inputSection = document.getElementById('inputSection');
-        const cursor = document.getElementById('cursor');
-        const SECRET_CODE = 'ZUUCASTER';
-        const PROTECTED_CONTENT = [
-            'unlocktool',
-            'mobilehospitalbd',
-            'password:Anwar.1982'
-        ];
-        
-        let messages = [];
-        let authenticated = false;
-        let isCopying = false;
-        
-        // Add message to terminal
-        function addMessage(text, className = '') {
-            const div = document.createElement('div');
-            div.className = `message ${className}`;
-            div.textContent = text;
-            terminal.appendChild(div);
-            terminal.scrollTop = terminal.scrollHeight;
+        function copyToClipboard(element) {
+            const text = element.textContent;
+            navigator.clipboard.writeText(text).then(function() {
+                // Visual feedback
+                const original = element.style.background;
+                element.style.background = "rgba(0, 255, 0, 0.5)";
+                setTimeout(() => { element.style.background = original; }, 500);
+                alert("Copied: " + text); // Or use a toast notification for better UX
+            }).catch(function(err) {
+                alert("Copy failed: " + err);
+            });
         }
         
-        // Initial boot messages
-        addMessage('System booting...');
-        setTimeout(() => addMessage('Security protocols initialized'), 800);
-        setTimeout(() => addMessage('Enter access code:'), 1500);
-        
-        // Anti-screenshot protections
-        document.addEventListener('contextmenu', (e) => {
+        // Basic screenshot "prevention" - this doesn't actually prevent screenshots but can deter casual ones
+        // by overlaying a dynamic element or using canvas (advanced). For now, just a note.
+        document.addEventListener("contextmenu", function(e) {
             e.preventDefault();
-            addMessage('SECURITY: Context menu disabled', 'error');
         });
-        
-        document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey && e.key === 'p') || e.key === 'PrintScreen' || (e.ctrlKey && e.key === 's')) {
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "PrintScreen" || (e.ctrlKey && e.key === "p")) {
                 e.preventDefault();
-                addMessage('SECURITY: Capture attempt blocked', 'error');
+                alert("Screenshot blocked in secure vault.");
             }
         });
-        
-        // Obfuscate text visually (randomly replace chars with blocks)
-        function getObfuscatedText(text) {
-            return text.split('').map(char => Math.random() > 0.3 ? char : '█').join('');
-        }
-        
-        // Submit code
-        function submitCode() {
-            const input = codeInput.value.toUpperCase().trim();
-            if (input === SECRET_CODE) {
-                authenticated = true;
-                addMessage('ACCESS GRANTED', 'success');
-                addMessage('Decrypting secure content...');
-                setTimeout(() => {
-                    addMessage('Content ready for copy operation');
-                    showProtectedContent();
-                }, 1000);
-                inputSection.style.display = 'none';
-                cursor.style.display = 'none';
-                codeInput.value = '';
-            } else {
-                addMessage('ACCESS DENIED - Invalid code', 'error');
-                addMessage('System will lock down in 3...');
-                setTimeout(() => addMessage('2...'), 1000);
-                setTimeout(() => addMessage('1...'), 2000);
-                setTimeout(() => {
-                    codeInput.value = '';
-                    addMessage('Enter access code:');
-                }, 3000);
-            }
-        }
-        
-        // Show protected content
-        function showProtectedContent() {
-            const contentDiv = document.createElement('div');
-            contentDiv.innerHTML = '<div class="message success">SECURE CONTENT:</div>';
-            PROTECTED_CONTENT.forEach((item, index) => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'content-item protected';
-                itemDiv.innerHTML = `
-                    <span class="content-text obfuscated">${getObfuscatedText(item)}</span>
-                    <button onclick="copyToClipboard('${item.replace(/'/g, "\\'")}', this)" ${isCopying ? 'disabled' : ''}>
-                        ${isCopying ? 'COPIED' : 'COPY'}
-                    </button>
-                `;
-                contentDiv.appendChild(itemDiv);
-            });
-            terminal.appendChild(contentDiv);
-        }
-        
-        // Copy to clipboard
-        function copyToClipboard(text, button) {
-            if (isCopying) return;
-            navigator.clipboard.writeText(text).then(() => {
-                isCopying = true;
-                button.textContent = 'COPIED';
-                button.disabled = true;
-                button.style.background = '#004400';
-                addMessage(`Copied: ${text}`, 'success');
-                setTimeout(() => {
-                    isCopying = false;
-                    button.textContent = 'COPY';
-                    button.disabled = false;
-                    button.style.background = '#00aa00';
-                }, 2000);
-            }).catch(() => {
-                addMessage('Copy failed. Manually select and copy.', 'error');
-            });
-        }
-        
-        // Enter key submission
-        codeInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') submitCode();
-        });
-        
-        // Cursor blink animation
-        setInterval(() => {
-            if (!authenticated && inputSection.style.display !== 'none') {
-                cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
-            }
-        }, 500);
     </script>
 </body>
 </html>
