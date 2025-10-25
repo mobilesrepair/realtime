@@ -1,251 +1,204 @@
-<!doctype html>
-<html lang="ms">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Zuu Caster — Access Console</title>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'none'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'">
-  <style>
-    /* Hacker terminal theme */
-    :root{ --bg:#000; --panel:#071013; --accent:#00ff7f; --accent-dim:#0aa66a; --muted:#68d391 }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Courier New', monospace;background:linear-gradient(180deg,#000 0%, #020202 100%);color:var(--accent)}
-
-    /* layout */
-    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:36px}
-    .console{width:980px;max-width:96%;border-radius:8px;overflow:hidden;border:1px solid rgba(0,255,127,0.06);box-shadow:0 30px 80px rgba(0,0,0,.9);background:linear-gradient(180deg,rgba(0,0,0,.6), rgba(2,6,9,.6));}
-
-    .header{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid rgba(0,255,127,0.03);background:rgba(0,0,0,.35)}
-    .logo {font-weight:800;letter-spacing:1px;color:var(--accent);}
-    .sub{color:rgba(0,255,127,0.32);font-size:13px;margin-left:auto}
-
-    .main{display:flex;gap:18px;padding:18px}
-    .left{width:360px;background:rgba(0,0,0,0.25);border-radius:6px;padding:14px;border:1px dashed rgba(0,255,127,0.04)}
-    .right{flex:1;padding:14px}
-
-    h2{margin:0 0 8px;color:var(--accent);font-size:16px}
-    p.lead{margin:0 0 12px;color:rgba(0,255,127,0.45);font-size:13px}
-
-    .term-line{background:#020202;border-radius:6px;padding:10px 12px;border:1px solid rgba(0,255,127,0.02);font-family:inherit;color:var(--accent);}
-
-    .input{width:100%;padding:10px 12px;border-radius:6px;background:transparent;border:1px solid rgba(0,255,127,0.06);color:var(--accent);font-size:15px}
-    .btn{display:inline-block;padding:9px 12px;border-radius:6px;background:transparent;border:1px solid rgba(0,255,127,0.12);color:var(--accent);cursor:pointer;font-weight:700}
-    .btn.primary{background:linear-gradient(90deg, rgba(0,255,127,0.06), rgba(0,255,127,0.02));}
-
-    .creds{font-family:monospace;background:rgba(2,6,9,0.6);padding:12px;border-radius:6px;color:var(--muted);display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid rgba(0,255,127,0.04)}
-    .creds .value{word-break:break-all;color:#c8ffe0}
-    .copy{background:transparent;border:1px solid rgba(0,255,127,0.03);padding:6px 8px;border-radius:6px;cursor:pointer;color:var(--muted)}
-
-    .protected{margin-top:14px;display:none}
-    .protected.show{display:block}
-
-    /* animated terminal output */
-    .screenout{background:#000; border-radius:6px;padding:12px;height:220px;overflow:auto;border:1px solid rgba(0,255,127,0.03);box-shadow:inset 0 10px 30px rgba(0,0,0,.6);}
-    .line{font-family:inherit;color:rgba(0,255,127,0.9);font-size:13px;white-space:pre-wrap}
-
-    /* watermark */
-    .wm{position:fixed;inset:0;pointer-events:none;opacity:.08;z-index:40;background-repeat:repeat;background-size:420px 200px;mix-blend-mode:screen}
-
-    /* toast */
-    .toast{position:fixed;right:18px;top:18px;background:#071018;padding:10px 12px;border-radius:8px;color:#bfffd8;box-shadow:0 8px 30px rgba(0,0,0,.7);opacity:0;transform:translateY(-6px);transition:.18s;z-index:90}
-    .toast.show{opacity:1;transform:translateY(0)}
-
-    /* small server snippet area */
-    .server-snippet{margin-top:14px;background:#041018;border-radius:6px;padding:12px;border:1px solid rgba(255,255,255,0.03);color:#9fffe0;max-height:240px;overflow:auto}
-    pre{font-size:12px;margin:0;white-space:pre-wrap}
-
-    /* disable selection */
-    *{user-select:none;-webkit-user-select:none}
-
-    @media (max-width:760px){ .main{flex-direction:column} .left{width:100%} }
-    @media print{body *{display:none !important}}
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Terminal - Access Granted</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #000;
+            color: #00ff00;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            overflow: hidden;
+        }
+        .terminal {
+            width: 80%;
+            max-width: 800px;
+            background-color: #111;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px #00ff00;
+            position: relative;
+            animation: glow 2s infinite alternate;
+        }
+        @keyframes glow {
+            from { box-shadow: 0 0 20px #00ff00; }
+            to { box-shadow: 0 0 30px #00ff00, 0 0 40px #00ff00; }
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(0,255,0,0.05),
+                rgba(0,255,0,0.05) 10px,
+                rgba(0,0,0,0.1) 10px,
+                rgba(0,0,0,0.1) 20px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+        .header {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ff00;
+            animation: flicker 1.5s infinite alternate;
+        }
+        @keyframes flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+        .prompt {
+            margin-bottom: 20px;
+        }
+        .typing {
+            border-right: 2px solid #00ff00;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 50% { border-color: #00ff00; }
+            51%, 100% { border-color: transparent; }
+        }
+        input {
+            background: transparent;
+            border: none;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            outline: none;
+            width: 200px;
+        }
+        button {
+            background: transparent;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            margin-left: 10px;
+        }
+        button:hover {
+            background: #00ff00;
+            color: #000;
+        }
+        .copy-btn {
+            font-size: 12px;
+        }
+        .hidden {
+            display: none;
+        }
+        .output {
+            white-space: pre-wrap;
+            margin-bottom: 10px;
+        }
+        .item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .item span {
+            flex-grow: 1;
+        }
+        @media print {
+            body { display: none; }
+        }
+    </style>
 </head>
-<body>
-  <div id="wm" class="wm" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="console" role="application" aria-label="Access Console">
-      <div class="header">
-        <div class="logo">ZUU-ACCESS</div>
-        <div class="sub">secure console • enter credentials to proceed</div>
-      </div>
-
-      <div class="main">
-        <div class="left">
-          <h2>ACCESS</h2>
-          <p class="lead">Masukkan kata laluan untuk membuka akses. Hint: kata laluan disediakan oleh anda.</p>
-
-          <div class="term-line">
-            <div style="display:flex;gap:8px;align-items:center">
-              <input id="pw" class="input" type="password" autocomplete="off" placeholder="kata laluan" />
-              <button id="unlock" class="btn primary">ENTER</button>
+<body oncontextmenu="return false;" onkeydown="if(event.keyCode==123){return false;}else if(event.ctrlKey && event.shiftKey && event.keyCode==73){return false;}">
+    <div class="terminal">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="header">TSM TXOL</div>
+            <div id="login">
+                <div class="prompt">
+                    <span>root@hacker-terminal:~# Access code required.</span><br>
+                    <span>Enter code: </span><input type="password" id="code" class="typing" placeholder="">
+                    <button onclick="checkCode()">Execute</button>
+                </div>
             </div>
-            <div style="margin-top:8px;color:rgba(0,255,127,0.3);font-size:13px">Tekan Enter selepas taip. Kata laluan: <strong style="color:#99ffbd">zuucaster</strong></div>
-          </div>
-
-          <div style="height:12px"></div>
-
-          <div class="screenout" id="log">
-            <div class="line">[init] starting secure console...</div>
-            <div class="line">[info] anti-screenshot modules loaded</div>
-            <div class="line">[info] clipboard monitor ready</div>
-            <div class="line">[info] focus-watch active</div>
-          </div>
-
+            <div id="protected" class="hidden">
+                <div class="output">
+root@hacker-terminal:~# Access granted.
+Decrypting data...
+                </div>
+                <div class="item">
+                    <span>cellularphone.nicaragua@gmail.com</span>
+                    <button class="copy-btn" onclick="copyToClipboard('cellularphone.nicaragua@gmail.com')">Copy</button>
+                </div>
+                <div class="item">
+                    <span>ANICARAGUA2020</span>
+                    <button class="copy-btn" onclick="copyToClipboard('ANICARAGUA2020')">Copy</button>
+                </div>
+                <div class="output">
+Data decrypted. Session active.
+                </div>
+            </div>
         </div>
-
-        <div class="right">
-          <h2>Target — Credentials</h2>
-          <p class="lead">Kandungan dikunci sehingga access diberikan. Email & password contoh dipaparkan selepas unlock.</p>
-
-          <div id="protected" class="protected" aria-hidden="true">
-            <div class="creds">
-              <div>
-                <div style="font-size:12px;color:rgba(0,255,127,0.35)">EMAIL</div>
-                <div class="value" id="email">cellularphone.nicaragua@gmail.com</div>
-              </div>
-              <div><button class="copy" data-target="email">COPY</button></div>
-            </div>
-
-            <div style="height:12px"></div>
-
-            <div class="creds">
-              <div>
-                <div style="font-size:12px;color:rgba(0,255,127,0.35)">PASSWORD</div>
-                <div class="value" id="pwdVal">ANICARAGUA2020</div>
-              </div>
-              <div><button class="copy" data-target="pwdVal">COPY</button></div>
-            </div>
-
-          <div class="server-snippet" id="serverSnippet" aria-hidden="true">
-              <strong>Node/Express example — simple auth (save sessions)</strong>
-              <pre>// Install: npm init -y
-// npm i express express-session body-parser
-
-const express = require('express');
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const app = express();
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({ secret: 'replace_with_strong_secret', resave: false, saveUninitialized: true, cookie: { maxAge: 3600000 }}));
-
-// simple login page (POST /login expects 'pw')
-app.post('/login', (req, res) => {
-  const pw = req.body.pw || '';
-  if (pw === 'zuucaster'){
-    req.session.authed = true;
-    return res.json({ ok: true, msg: 'authed' });
-  }
-  res.status(401).json({ ok: false, msg: 'wrong' });
-});
-
-// protected endpoint
-app.get('/protected', (req, res) => {
-  if(!req.session.authed) return res.status(403).json({ ok:false });
-  res.json({ ok:true, email:'cellularphone.nicaragua@gmail.com', password:'ANICARAGUA2020' });
-});
-
-app.listen(3000, ()=> console.log('Auth server listening on :3000'));
-</pre>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-
     </div>
-  </div>
 
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script>
+        function checkCode() {
+            const code = document.getElementById('code').value;
+            if (code === 'zuucaster') {
+                document.getElementById('login').classList.add('hidden');
+                document.getElementById('protected').classList.remove('hidden');
+            } else {
+                alert('Access denied. Incorrect code.');
+            }
+        }
 
-  <script>
-    (function(){
-      const PASSWORD = 'zuucaster';
-      const pw = document.getElementById('pw');
-      const unlock = document.getElementById('unlock');
-      const protectedArea = document.getElementById('protected');
-      const toast = document.getElementById('toast');
-      const log = document.getElementById('log');
-      const wm = document.getElementById('wm');
+        function copyToClipboard(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(function() {
+                    alert('Copied to clipboard: ' + text);
+                }, function(err) {
+                    alert('Failed to copy: ' + err);
+                });
+            } else {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    alert('Copied to clipboard: ' + text);
+                } catch (err) {
+                    alert('Failed to copy');
+                }
+                document.body.removeChild(textArea);
+            }
+        }
 
-      function buildWM(text='Zuu Caster • CONFIDENTIAL'){
-        const c = document.createElement('canvas'); c.width=900; c.height=420;
-        const ctx = c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height);
-        ctx.globalAlpha = 0.06; ctx.translate(220,160); ctx.rotate(-Math.PI/7);
-        ctx.font = '800 34px monospace'; ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#00e5ff'; ctx.textAlign='center';
-        for(let y=-240;y<=240;y+=120) for(let x=-600;x<=600;x+=360) ctx.fillText(text,x,y);
-        wm.style.backgroundImage = `url(${c.toDataURL('image/png')})`;
-      }
-
-      function toastShow(msg){ toast.textContent=msg; toast.classList.add('show'); clearTimeout(toastShow.t); toastShow.t=setTimeout(()=>toast.classList.remove('show'),1500); }
-
-      // basic protections
-      document.addEventListener('contextmenu', e=> e.preventDefault());
-      ['copy','cut','paste','selectstart'].forEach(ev=>document.addEventListener(ev,e=>{ e.preventDefault(); toastShow('Action blocked'); }));
-      document.addEventListener('keydown', e=>{
-        const k=e.key.toLowerCase(); const blocked = ( (e.ctrlKey && ['p','s','u','c','x'].includes(k)) || (e.ctrlKey&&e.shiftKey && ['i','c','j'].includes(k)) || k==='f12' || k==='printscreen');
-        if(blocked){ e.preventDefault(); toastShow('Shortcut blocked'); }
-      });
-      document.addEventListener('keyup', async e=>{ if(e.key==='PrintScreen'){ try{ await navigator.clipboard.writeText('Screenshots disabled on this page'); }catch{} toastShow('PrintScreen intercepted'); }});
-
-      window.addEventListener('blur', ()=> document.body.style.filter='blur(10px) brightness(.7)');
-      window.addEventListener('focus', ()=> document.body.style.filter='none');
-      document.addEventListener('visibilitychange', ()=>{ if(document.hidden) document.body.style.filter='blur(10px)'; else document.body.style.filter='none'; });
-
-      // typing animation helpers
-      function appendLine(){ const d = document.createElement('div'); d.className='line'; log.appendChild(d); return d; }
-      function typeText(container, text, speed=20){ return new Promise(resolve=>{
-        const span = document.createElement('span'); span.className='typing'; container.appendChild(span);
-        const cur = document.createElement('span'); cur.className='cursor'; container.appendChild(cur);
-        let i=0; function step(){ if(i<text.length){ span.textContent += text[i++]; log.scrollTop=log.scrollHeight; setTimeout(step, speed);} else { cur.remove(); resolve(); }} step();
-      }); }
-
-      async function bootSequence(){
-        const lines = [
-          '[init] starting secure console...\n',
-          '[info] anti-screenshot modules loaded\n',
-          '[info] clipboard monitor ready\n',
-          '[info] focus-watch active\n',
-          '[warn] external screenshot detectors: unknown\n'
-        ];
-        for(const t of lines){ const node = appendLine(); await typeText(node, t, 18); await new Promise(r=>setTimeout(r, 220)); }
-      }
-
-      bootSequence();
-
-      function logLine(t){ const d=document.createElement('div'); d.className='line'; d.textContent=t; log.appendChild(d); log.scrollTop = log.scrollHeight; }
-
-      unlock.addEventListener('click', ()=>{
-        const val = (pw.value||'').trim();
-        if(val===PASSWORD){ protectedArea.classList.add('show'); protectedArea.setAttribute('aria-hidden','false'); toastShow('Access granted'); logLine('[auth] success — session open'); document.getElementById('serverSnippet').setAttribute('aria-hidden','false'); }
-        else{ toastShow('Access denied'); logLine('[auth] failed — wrong password'); protectedArea.classList.remove('show'); }
-        pw.value='';
-      });
-
-      pw.addEventListener('keydown', e=>{ if(e.key==='Enter') unlock.click(); });
-
-      document.querySelectorAll('.copy').forEach(btn=>{
-        btn.addEventListener('click', async ()=>{
-          const target=btn.getAttribute('data-target'); const el=document.getElementById(target); if(!el) return toastShow('Tiada data');
-          try{ await navigator.clipboard.writeText(el.textContent.trim()); toastShow('Disalin ke clipboard'); } catch(e){ toastShow('Clipboard failed'); }
+        // Additional anti-copy measures (prevents user-initiated copy/paste, but buttons work)
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+            alert('Copying disabled in secure terminal.');
         });
-      });
-
-      // theme switches
-      document.getElementById('themeCyan').addEventListener('click', ()=>{ document.documentElement.style.setProperty('--accent','#00e5ff'); document.documentElement.style.setProperty('--accent-dim','#00aabf'); document.body.style.color='var(--accent)'; buildWM(); });
-      document.getElementById('themeMag').addEventListener('click', ()=>{ document.documentElement.style.setProperty('--accent','#ff33cc'); document.documentElement.style.setProperty('--accent-dim','#b00085'); document.body.style.color='var(--accent)'; buildWM(); });
-      document.getElementById('themeGreen').addEventListener('click', ()=>{ document.documentElement.style.setProperty('--accent','#00ff7f'); document.documentElement.style.setProperty('--accent-dim','#0aa66a'); document.body.style.color='var(--accent)'; buildWM(); });
-
-      // extra overlay blur when mouse leaves window
-      window.addEventListener('mouseout', e=>{ if(!e.relatedTarget && !e.toElement){ document.body.style.filter='blur(12px)'; setTimeout(()=>{ if(!document.hasFocus()) document.body.style.filter='blur(12px)'; },120);} });
-
-      // prevent printing
-      window.addEventListener('beforeprint', e=>{ toastShow('Print disabled'); e.preventDefault(); });
-
-    })();
-  </script>
+        document.addEventListener('paste', function(e) {
+            e.preventDefault();
+            alert('Pasting disabled in secure terminal.');
+        });
+    </script>
 </body>
 </html>
