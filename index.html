@@ -1,254 +1,251 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ms">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hacker Vault - Access Denied</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
-        
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-            color: #00ff00;
-            font-family: 'Orbitron', monospace;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .container {
-            text-align: center;
-            max-width: 600px;
-            padding: 20px;
-            border: 2px solid #00ff00;
-            border-radius: 10px;
-            box-shadow: 0 0 20px #00ff00;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 20px #00ff00; }
-            50% { box-shadow: 0 0 40px #00ff00; }
-            100% { box-shadow: 0 0 20px #00ff00; }
-        }
-        
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px #00ff00;
-            letter-spacing: 3px;
-        }
-        
-        input[type="password"] {
-            background: #000;
-            border: 1px solid #00ff00;
-            color: #00ff00;
-            padding: 15px;
-            font-size: 1.2em;
-            font-family: 'Orbitron', monospace;
-            width: 300px;
-            margin: 10px;
-            border-radius: 5px;
-            text-align: center;
-        }
-        
-        input[type="password"]::placeholder {
-            color: #00ff00;
-            opacity: 0.7;
-        }
-        
-        button {
-            background: #00ff00;
-            color: #000;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.2em;
-            font-family: 'Orbitron', monospace;
-            cursor: pointer;
-            border-radius: 5px;
-            margin: 10px;
-            transition: all 0.3s;
-        }
-        
-        button:hover {
-            background: #00cc00;
-            box-shadow: 0 0 10px #00ff00;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        .vault-content {
-            margin-top: 30px;
-            text-align: left;
-            background: rgba(0, 255, 0, 0.1);
-            padding: 20px;
-            border: 1px solid #00ff00;
-            border-radius: 5px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        
-        .vault-content h2 {
-            text-align: center;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-        }
-        
-        .section {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px dashed #00ff00;
-            border-radius: 5px;
-        }
-        
-        .section h3 {
-            color: #00ff00;
-            font-size: 1.3em;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        
-        .content-item {
-            background: rgba(0, 0, 0, 0.5);
-            margin: 10px 0;
-            padding: 10px;
-            border-left: 4px solid #00ff00;
-            font-size: 1.1em;
-            word-break: break-all;
-            cursor: pointer;
-            transition: background 0.3s;
-            user-select: text; /* Allow text selection for copy-paste */
-        }
-        
-        .content-item:hover {
-            background: rgba(0, 255, 0, 0.2);
-        }
-        
-        .content-item:active {
-            background: rgba(0, 255, 0, 0.3);
-        }
-        
-        /* Matrix-style background animation */
-        .matrix {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.1;
-            z-index: -1;
-            font-size: 20px;
-            animation: matrix 10s linear infinite;
-        }
-        
-        @keyframes matrix {
-            0% { transform: translateY(100vh); }
-            100% { transform: translateY(-100vh); }
-        }
-        
-        /* Note: Screenshot prevention is not fully possible in web browsers, but we've made content selectable for copy-paste only. */
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zuu Caster — Access Console</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'none'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'">
+  <style>
+    /* Hacker terminal theme */
+    :root{ --bg:#000; --panel:#071013; --accent:#00ff7f; --accent-dim:#0aa66a; --muted:#68d391 }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Courier New', monospace;background:linear-gradient(180deg,#000 0%, #020202 100%);color:var(--accent)}
+
+    /* layout */
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:36px}
+    .console{width:980px;max-width:96%;border-radius:8px;overflow:hidden;border:1px solid rgba(0,255,127,0.06);box-shadow:0 30px 80px rgba(0,0,0,.9);background:linear-gradient(180deg,rgba(0,0,0,.6), rgba(2,6,9,.6));}
+
+    .header{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid rgba(0,255,127,0.03);background:rgba(0,0,0,.35)}
+    .logo {font-weight:800;letter-spacing:1px;color:var(--accent);}
+    .sub{color:rgba(0,255,127,0.32);font-size:13px;margin-left:auto}
+
+    .main{display:flex;gap:18px;padding:18px}
+    .left{width:360px;background:rgba(0,0,0,0.25);border-radius:6px;padding:14px;border:1px dashed rgba(0,255,127,0.04)}
+    .right{flex:1;padding:14px}
+
+    h2{margin:0 0 8px;color:var(--accent);font-size:16px}
+    p.lead{margin:0 0 12px;color:rgba(0,255,127,0.45);font-size:13px}
+
+    .term-line{background:#020202;border-radius:6px;padding:10px 12px;border:1px solid rgba(0,255,127,0.02);font-family:inherit;color:var(--accent);}
+
+    .input{width:100%;padding:10px 12px;border-radius:6px;background:transparent;border:1px solid rgba(0,255,127,0.06);color:var(--accent);font-size:15px}
+    .btn{display:inline-block;padding:9px 12px;border-radius:6px;background:transparent;border:1px solid rgba(0,255,127,0.12);color:var(--accent);cursor:pointer;font-weight:700}
+    .btn.primary{background:linear-gradient(90deg, rgba(0,255,127,0.06), rgba(0,255,127,0.02));}
+
+    .creds{font-family:monospace;background:rgba(2,6,9,0.6);padding:12px;border-radius:6px;color:var(--muted);display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid rgba(0,255,127,0.04)}
+    .creds .value{word-break:break-all;color:#c8ffe0}
+    .copy{background:transparent;border:1px solid rgba(0,255,127,0.03);padding:6px 8px;border-radius:6px;cursor:pointer;color:var(--muted)}
+
+    .protected{margin-top:14px;display:none}
+    .protected.show{display:block}
+
+    /* animated terminal output */
+    .screenout{background:#000; border-radius:6px;padding:12px;height:220px;overflow:auto;border:1px solid rgba(0,255,127,0.03);box-shadow:inset 0 10px 30px rgba(0,0,0,.6);}
+    .line{font-family:inherit;color:rgba(0,255,127,0.9);font-size:13px;white-space:pre-wrap}
+
+    /* watermark */
+    .wm{position:fixed;inset:0;pointer-events:none;opacity:.08;z-index:40;background-repeat:repeat;background-size:420px 200px;mix-blend-mode:screen}
+
+    /* toast */
+    .toast{position:fixed;right:18px;top:18px;background:#071018;padding:10px 12px;border-radius:8px;color:#bfffd8;box-shadow:0 8px 30px rgba(0,0,0,.7);opacity:0;transform:translateY(-6px);transition:.18s;z-index:90}
+    .toast.show{opacity:1;transform:translateY(0)}
+
+    /* small server snippet area */
+    .server-snippet{margin-top:14px;background:#041018;border-radius:6px;padding:12px;border:1px solid rgba(255,255,255,0.03);color:#9fffe0;max-height:240px;overflow:auto}
+    pre{font-size:12px;margin:0;white-space:pre-wrap}
+
+    /* disable selection */
+    *{user-select:none;-webkit-user-select:none}
+
+    @media (max-width:760px){ .main{flex-direction:column} .left{width:100%} }
+    @media print{body *{display:none !important}}
+
+  </style>
 </head>
 <body>
-    <div class="matrix" id="matrix"></div>
-    
-    <div class="container">
-        <h1>ACCESS TERMINAL</h1>
-        <p style="font-size: 1.1em; margin-bottom: 20px;">Enter Secret Code to Unlock Vault</p>
-        
-        <input type="password" id="secretCode" placeholder="ZUUCASTER" maxlength="9">
-        <br>
-        <button onclick="checkCode()">DECRYPT</button>
-        
-        <div id="vault" class="vault-content hidden">
-            <h2>UNLOCKED CONTENT</h2>
-            
-            <div class="section">
-                <h3>1. unlocktool</h3>
-                <div class="content-item" onclick="copyToClipboard(this)">mobilehospitalbd</div>
-                <div class="content-item" onclick="copyToClipboard(this)">Anwar.1982</div>
-            </div>
-            
-            <div class="section">
-                <h3>2. axmt</h3>
-                <div class="content-item" onclick="copyToClipboard(this)">sharwankumarverma@gmail.com</div>
-                <div class="content-item" onclick="copyToClipboard(this)">Sharwan44</div>
-            </div>
-            
-            <p style="font-size: 0.9em; color: #00cc00; margin-top: 20px;">Click any item to copy. Screenshots disabled in secure mode (browser limitations apply).</p>
-        </div>
-    </div>
+  <div id="wm" class="wm" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="console" role="application" aria-label="Access Console">
+      <div class="header">
+        <div class="logo">ZUU-ACCESS</div>
+        <div class="sub">secure console • enter credentials to proceed</div>
+      </div>
 
-    <script>
-        const secretCode = "ZUUCASTER";
-        const vault = document.getElementById("vault");
-        const input = document.getElementById("secretCode");
-        
-        // Generate simple matrix rain effect
-        function createMatrix() {
-            const matrix = document.getElementById("matrix");
-            const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
-            for (let i = 0; i < 100; i++) {
-                const span = document.createElement("span");
-                span.textContent = chars[Math.floor(Math.random() * chars.length)];
-                span.style.position = "absolute";
-                span.style.left = Math.random() * 100 + "%";
-                span.style.animationDelay = Math.random() * 10 + "s";
-                matrix.appendChild(span);
-            }
-        }
-        createMatrix();
-        
-        function checkCode() {
-            if (input.value === secretCode) {
-                vault.classList.remove("hidden");
-                input.disabled = true;
-                document.querySelector("button").textContent = "SECURED";
-                document.querySelector("button").style.background = "#00cc00";
-            } else {
-                alert("ACCESS DENIED. Wrong code.");
-                input.value = "";
-                input.focus();
-            }
-        }
-        
-        // Allow Enter key to submit
-        input.addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                checkCode();
-            }
+      <div class="main">
+        <div class="left">
+          <h2>ACCESS</h2>
+          <p class="lead">Masukkan kata laluan untuk membuka akses. Hint: kata laluan disediakan oleh anda.</p>
+
+          <div class="term-line">
+            <div style="display:flex;gap:8px;align-items:center">
+              <input id="pw" class="input" type="password" autocomplete="off" placeholder="kata laluan" />
+              <button id="unlock" class="btn primary">ENTER</button>
+            </div>
+            <div style="margin-top:8px;color:rgba(0,255,127,0.3);font-size:13px">Tekan Enter selepas taip. Kata laluan: <strong style="color:#99ffbd">zuucaster</strong></div>
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="screenout" id="log">
+            <div class="line">[init] starting secure console...</div>
+            <div class="line">[info] anti-screenshot modules loaded</div>
+            <div class="line">[info] clipboard monitor ready</div>
+            <div class="line">[info] focus-watch active</div>
+          </div>
+
+        </div>
+
+        <div class="right">
+          <h2>Target — Credentials</h2>
+          <p class="lead">Kandungan dikunci sehingga access diberikan. Email & password contoh dipaparkan selepas unlock.</p>
+
+          <div id="protected" class="protected" aria-hidden="true">
+            <div class="creds">
+              <div>
+                <div style="font-size:12px;color:rgba(0,255,127,0.35)">EMAIL</div>
+                <div class="value" id="email">cellularphone.nicaragua@gmail.com</div>
+              </div>
+              <div><button class="copy" data-target="email">COPY</button></div>
+            </div>
+
+            <div style="height:12px"></div>
+
+            <div class="creds">
+              <div>
+                <div style="font-size:12px;color:rgba(0,255,127,0.35)">PASSWORD</div>
+                <div class="value" id="pwdVal">ANICARAGUA2020</div>
+              </div>
+              <div><button class="copy" data-target="pwdVal">COPY</button></div>
+            </div>
+
+          <div class="server-snippet" id="serverSnippet" aria-hidden="true">
+              <strong>Node/Express example — simple auth (save sessions)</strong>
+              <pre>// Install: npm init -y
+// npm i express express-session body-parser
+
+const express = require('express');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({ secret: 'replace_with_strong_secret', resave: false, saveUninitialized: true, cookie: { maxAge: 3600000 }}));
+
+// simple login page (POST /login expects 'pw')
+app.post('/login', (req, res) => {
+  const pw = req.body.pw || '';
+  if (pw === 'zuucaster'){
+    req.session.authed = true;
+    return res.json({ ok: true, msg: 'authed' });
+  }
+  res.status(401).json({ ok: false, msg: 'wrong' });
+});
+
+// protected endpoint
+app.get('/protected', (req, res) => {
+  if(!req.session.authed) return res.status(403).json({ ok:false });
+  res.json({ ok:true, email:'cellularphone.nicaragua@gmail.com', password:'ANICARAGUA2020' });
+});
+
+app.listen(3000, ()=> console.log('Auth server listening on :3000'));
+</pre>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (function(){
+      const PASSWORD = 'zuucaster';
+      const pw = document.getElementById('pw');
+      const unlock = document.getElementById('unlock');
+      const protectedArea = document.getElementById('protected');
+      const toast = document.getElementById('toast');
+      const log = document.getElementById('log');
+      const wm = document.getElementById('wm');
+
+      function buildWM(text='Zuu Caster • CONFIDENTIAL'){
+        const c = document.createElement('canvas'); c.width=900; c.height=420;
+        const ctx = c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height);
+        ctx.globalAlpha = 0.06; ctx.translate(220,160); ctx.rotate(-Math.PI/7);
+        ctx.font = '800 34px monospace'; ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#00e5ff'; ctx.textAlign='center';
+        for(let y=-240;y<=240;y+=120) for(let x=-600;x<=600;x+=360) ctx.fillText(text,x,y);
+        wm.style.backgroundImage = `url(${c.toDataURL('image/png')})`;
+      }
+
+      function toastShow(msg){ toast.textContent=msg; toast.classList.add('show'); clearTimeout(toastShow.t); toastShow.t=setTimeout(()=>toast.classList.remove('show'),1500); }
+
+      // basic protections
+      document.addEventListener('contextmenu', e=> e.preventDefault());
+      ['copy','cut','paste','selectstart'].forEach(ev=>document.addEventListener(ev,e=>{ e.preventDefault(); toastShow('Action blocked'); }));
+      document.addEventListener('keydown', e=>{
+        const k=e.key.toLowerCase(); const blocked = ( (e.ctrlKey && ['p','s','u','c','x'].includes(k)) || (e.ctrlKey&&e.shiftKey && ['i','c','j'].includes(k)) || k==='f12' || k==='printscreen');
+        if(blocked){ e.preventDefault(); toastShow('Shortcut blocked'); }
+      });
+      document.addEventListener('keyup', async e=>{ if(e.key==='PrintScreen'){ try{ await navigator.clipboard.writeText('Screenshots disabled on this page'); }catch{} toastShow('PrintScreen intercepted'); }});
+
+      window.addEventListener('blur', ()=> document.body.style.filter='blur(10px) brightness(.7)');
+      window.addEventListener('focus', ()=> document.body.style.filter='none');
+      document.addEventListener('visibilitychange', ()=>{ if(document.hidden) document.body.style.filter='blur(10px)'; else document.body.style.filter='none'; });
+
+      // typing animation helpers
+      function appendLine(){ const d = document.createElement('div'); d.className='line'; log.appendChild(d); return d; }
+      function typeText(container, text, speed=20){ return new Promise(resolve=>{
+        const span = document.createElement('span'); span.className='typing'; container.appendChild(span);
+        const cur = document.createElement('span'); cur.className='cursor'; container.appendChild(cur);
+        let i=0; function step(){ if(i<text.length){ span.textContent += text[i++]; log.scrollTop=log.scrollHeight; setTimeout(step, speed);} else { cur.remove(); resolve(); }} step();
+      }); }
+
+      async function bootSequence(){
+        const lines = [
+          '[init] starting secure console...\n',
+          '[info] anti-screenshot modules loaded\n',
+          '[info] clipboard monitor ready\n',
+          '[info] focus-watch active\n',
+          '[warn] external screenshot detectors: unknown\n'
+        ];
+        for(const t of lines){ const node = appendLine(); await typeText(node, t, 18); await new Promise(r=>setTimeout(r, 220)); }
+      }
+
+      bootSequence();
+
+      function logLine(t){ const d=document.createElement('div'); d.className='line'; d.textContent=t; log.appendChild(d); log.scrollTop = log.scrollHeight; }
+
+      unlock.addEventListener('click', ()=>{
+        const val = (pw.value||'').trim();
+        if(val===PASSWORD){ protectedArea.classList.add('show'); protectedArea.setAttribute('aria-hidden','false'); toastShow('Access granted'); logLine('[auth] success — session open'); document.getElementById('serverSnippet').setAttribute('aria-hidden','false'); }
+        else{ toastShow('Access denied'); logLine('[auth] failed — wrong password'); protectedArea.classList.remove('show'); }
+        pw.value='';
+      });
+
+      pw.addEventListener('keydown', e=>{ if(e.key==='Enter') unlock.click(); });
+
+      document.querySelectorAll('.copy').forEach(btn=>{
+        btn.addEventListener('click', async ()=>{
+          const target=btn.getAttribute('data-target'); const el=document.getElementById(target); if(!el) return toastShow('Tiada data');
+          try{ await navigator.clipboard.writeText(el.textContent.trim()); toastShow('Disalin ke clipboard'); } catch(e){ toastShow('Clipboard failed'); }
         });
-        
-        function copyToClipboard(element) {
-            const text = element.textContent;
-            navigator.clipboard.writeText(text).then(function() {
-                // Visual feedback
-                const original = element.style.background;
-                element.style.background = "rgba(0, 255, 0, 0.5)";
-                setTimeout(() => { element.style.background = original; }, 500);
-                alert("Copied: " + text); // Or use a toast notification for better UX
-            }).catch(function(err) {
-                alert("Copy failed: " + err);
-            });
-        }
-        
-        // Basic screenshot "prevention" - this doesn't actually prevent screenshots but can deter casual ones
-        // by overlaying a dynamic element or using canvas (advanced). For now, just a note.
-        document.addEventListener("contextmenu", function(e) {
-            e.preventDefault();
-        });
-        document.addEventListener("keydown", function(e) {
-            if (e.key === "PrintScreen" || (e.ctrlKey && e.key === "p")) {
-                e.preventDefault();
-                alert("Screenshot blocked in secure vault.");
-            }
-        });
-    </script>
+      });
+
+      // theme switches
+      document.getElementById('themeCyan').addEventListener('click', ()=>{ document.documentElement.style.setProperty('--accent','#00e5ff'); document.documentElement.style.setProperty('--accent-dim','#00aabf'); document.body.style.color='var(--accent)'; buildWM(); });
+      document.getElementById('themeMag').addEventListener('click', ()=>{ document.documentElement.style.setProperty('--accent','#ff33cc'); document.documentElement.style.setProperty('--accent-dim','#b00085'); document.body.style.color='var(--accent)'; buildWM(); });
+      document.getElementById('themeGreen').addEventListener('click', ()=>{ document.documentElement.style.setProperty('--accent','#00ff7f'); document.documentElement.style.setProperty('--accent-dim','#0aa66a'); document.body.style.color='var(--accent)'; buildWM(); });
+
+      // extra overlay blur when mouse leaves window
+      window.addEventListener('mouseout', e=>{ if(!e.relatedTarget && !e.toElement){ document.body.style.filter='blur(12px)'; setTimeout(()=>{ if(!document.hasFocus()) document.body.style.filter='blur(12px)'; },120);} });
+
+      // prevent printing
+      window.addEventListener('beforeprint', e=>{ toastShow('Print disabled'); e.preventDefault(); });
+
+    })();
+  </script>
 </body>
 </html>
